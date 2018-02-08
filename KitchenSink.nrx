@@ -1,0 +1,1025 @@
+/*
+ * Copyright (c) 2018 Jason Monroe Martin <agrellum@gmail.com>
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
+package org.apache.pivot.tutorials
+
+import java.awt.Color
+import java.io.IOException
+import java.io.Serializable
+import java.net.URL
+import java.util.Comparator
+import org.apache.pivot.beans.BXMLSerializer
+import org.apache.pivot.collections.ArrayList
+import org.apache.pivot.collections.HashMap
+import org.apache.pivot.collections.List
+import org.apache.pivot.collections.Map
+import org.apache.pivot.json.JSONSerializer
+import org.apache.pivot.serialization.SerializationException
+import org.apache.pivot.util.CalendarDate
+import org.apache.pivot.util.concurrent.TaskExecutionException
+import org.apache.pivot.util.Filter
+import org.apache.pivot.util.Vote
+import org.apache.pivot.wtk.Action
+import org.apache.pivot.wtk.ActivityIndicator
+import org.apache.pivot.wtk.Alert
+import org.apache.pivot.wtk.Application
+import org.apache.pivot.wtk.Application.AboutHandler
+import org.apache.pivot.wtk.ApplicationContext
+import org.apache.pivot.wtk.Border
+import org.apache.pivot.wtk.ButtonGroup
+import org.apache.pivot.wtk.ButtonPressListener
+import org.apache.pivot.wtk.Component
+import org.apache.pivot.wtk.Component.DecoratorSequence
+import org.apache.pivot.wtk.ComponentMouseButtonListener
+import org.apache.pivot.wtk.content.CalendarDateSpinnerData
+import org.apache.pivot.wtk.content.ListItem
+import org.apache.pivot.wtk.content.NumericSpinnerData
+import org.apache.pivot.wtk.content.TableViewHeaderData
+import org.apache.pivot.wtk.content.TableViewRowComparator
+import org.apache.pivot.wtk.content.TreeBranch
+import org.apache.pivot.wtk.content.TreeNode
+import org.apache.pivot.wtk.DesktopApplicationContext
+import org.apache.pivot.wtk.Display
+import org.apache.pivot.wtk.DragSource
+import org.apache.pivot.wtk.DropAction
+import org.apache.pivot.wtk.DropTarget
+import org.apache.pivot.wtk.effects.ReflectionDecorator
+import org.apache.pivot.wtk.ImageView
+import org.apache.pivot.wtk.Label
+import org.apache.pivot.wtk.ListButton
+import org.apache.pivot.wtk.ListView
+import org.apache.pivot.wtk.LocalManifest
+import org.apache.pivot.wtk.Manifest
+import org.apache.pivot.wtk.media.Image
+import org.apache.pivot.wtk.Menu
+import org.apache.pivot.wtk.Menu.Item
+import org.apache.pivot.wtk.Menu.Section
+import org.apache.pivot.wtk.MenuHandler
+import org.apache.pivot.wtk.MenuHandler.Adapter
+import org.apache.pivot.wtk.MessageType
+import org.apache.pivot.wtk.Mouse
+import org.apache.pivot.wtk.Mouse.Button
+import org.apache.pivot.wtk.Point
+import org.apache.pivot.wtk.Prompt
+import org.apache.pivot.wtk.PushButton
+import org.apache.pivot.wtk.Rollup
+import org.apache.pivot.wtk.RollupStateListener
+import org.apache.pivot.wtk.Slider
+import org.apache.pivot.wtk.SliderValueListener
+import org.apache.pivot.wtk.SortDirection
+import org.apache.pivot.wtk.Spinner
+import org.apache.pivot.wtk.TableView
+import org.apache.pivot.wtk.TableViewSortListener
+import org.apache.pivot.wtk.TreeView
+import org.apache.pivot.wtk.Visual
+import org.apache.pivot.wtk.Window
+import org.apache.pivot.wtk.effects
+
+class KitchenSink public implements Application,Application.AboutHandler
+
+
+  properties shared
+    win=Window null
+    infoRollup=Rollup
+    buttonsRollup=Rollup
+    listsRollup=Rollup
+    textRollup=Rollup
+    calendarsRollup=Rollup
+    xcolorChoosersRollup=Rollup
+    navigationRollup=Rollup
+    splittersRollup=Rollup
+    menusRollup=Rollup
+    metersRollup=Rollup
+    spinnersRollup=Rollup
+    tablesRollup=Rollup
+    treesRollup=Rollup
+    dragDropRollup=Rollup
+    alertsRollup=Rollup
+
+  method aboutRequested
+    about="Origin: "||ApplicationContext.getOrigin()||"; JVM version: "||ApplicationContext.getJVMVersion()
+    Prompt.prompt(about,this.win)
+
+  method startup(display=Display,properties=Map)
+    bxml=BXMLSerializer()
+    this.win=Window bxml.readObject(KitchenSink.class,"kitchen_sink.bxml")
+    bxml.bind(this,KitchenSink.class)
+    namespace=bxml.getNamespace()
+    this.infoRollup=Rollup namespace.get("infoRollup")
+    list=this.infoRollup.getRollupStateListeners()
+    list.add(InfoRollupStateHandler())
+    this.buttonsRollup=Rollup namespace.get("buttonsRollup")
+    list=this.buttonsRollup.getRollupStateListeners()
+    list.add(ButtonsRollupStateHandler())
+    this.listsRollup=Rollup namespace.get("listsRollup")
+    list=this.listsRollup.getRollupStateListeners()
+    list.add(ListsRollupStateHandler())
+    this.textRollup=Rollup namespace.get("textRollup")
+    list=this.textRollup.getRollupStateListeners()
+    list.add(TextRollupStateHandler())
+    this.calendarsRollup=Rollup namespace.get("calendarsRollup")
+    list=this.calendarsRollup.getRollupStateListeners()
+    list.add(CalendarsRollupStateHandler())
+    this.xcolorChoosersRollup=Rollup namespace.get("colorChoosersRollup")
+    list=this.xcolorChoosersRollup.getRollupStateListeners()
+    list.add(KitchenSink.ColorChoosersRollupStateHandler())
+    this.navigationRollup=Rollup namespace.get("navigationRollup")
+    list=this.navigationRollup.getRollupStateListeners()
+    list.add(NavigationRollupStateHandler())
+    this.splittersRollup=Rollup namespace.get("splittersRollup")
+    list=this.splittersRollup.getRollupStateListeners()
+    list.add(SplittersRollupStateHandler())
+    this.menusRollup=Rollup namespace.get("menusRollup")
+    list=this.menusRollup.getRollupStateListeners()
+    list.add(MenusRollupStateHandler())
+    this.metersRollup=Rollup namespace.get("metersRollup")
+    list=this.metersRollup.getRollupStateListeners()
+    list.add(MetersRollupStateHandler())
+    this.spinnersRollup=Rollup namespace.get("spinnersRollup")
+    list=this.spinnersRollup.getRollupStateListeners()
+    list.add(SpinnersRollupStateHandler())
+    this.tablesRollup=Rollup namespace.get("tablesRollup")
+    list=this.tablesRollup.getRollupStateListeners()
+    list.add(TablesRollupStateHandler())
+    this.treesRollup=Rollup namespace.get("treesRollup")
+    list=this.treesRollup.getRollupStateListeners()
+    list.add(TreesRollupStateHandler())
+    this.dragDropRollup=Rollup namespace.get("dragDropRollup")
+    list=this.dragDropRollup.getRollupStateListeners()
+    list.add(DragDropRollupStateHandler())
+    this.alertsRollup=Rollup namespace.get("alertsRollup")
+    list=this.alertsRollup.getRollupStateListeners()
+    list.add(AlertsRollupStateHandler())
+    this.win.open(display)
+    ApplicationContext.scheduleCallback(KitchenSink.AppRunnable(),0)
+
+  method shutdown(optional=boolean) returns boolean
+    if this.win\==null then do
+      this.win.close()
+    end
+    return 0
+
+  method suspend
+
+  method resume
+
+  method main(args=String[]) static
+    DesktopApplicationContext.main(KitchenSink.class,args)
+
+
+/**
+ * A sample of a Custom Table Row.
+ * <p>
+ * Note that this is public because it's references in one of bxml files of this application.
+ */
+
+class KitchenSink.CustomTableRow public final
+
+
+  properties private
+    a=boolean 0
+    b=Image null
+    c=String null
+
+  method CustomTableRow
+
+  method getA returns boolean
+    return this.a
+
+  method setA(ax=boolean)
+    this.a=ax
+
+  method getB returns Image
+    return this.b
+
+  method setB(bx=Image)
+    this.b=bx
+
+  method setB(bURL=URL)
+    imageFromURL=Image ApplicationContext.getResourceCache().get(bURL)
+    if imageFromURL==null then do
+      do
+        imageFromURL=Image.load(bURL)
+       catch extsk=TaskExecutionException
+        signal RuntimeException(extsk)
+      end
+      ApplicationContext.getResourceCache().put(bURL,imageFromURL)
+    end
+    setB(imageFromURL)
+
+  method getC returns String
+    return this.c
+
+  method setC(cx=String)
+    this.c=cx
+
+
+/**
+ * Orders TreeNode instances by their name using string comparison.
+ */
+
+class KitchenSink.TreeNodeComparator private final implements Comparator,Serializable
+
+
+  properties private /*constant*/
+    serialVersionUID=long 1
+
+  method TreeNodeComparator
+
+  method compare(treeNode1o=Object,treeNode2o=Object) returns int
+    treeNode1=TreeNode treeNode1o
+    treeNode2=TreeNode treeNode2o
+    text1=treeNode1.getText()
+    text2=treeNode2.getText()
+    result=int
+    if text1==null&text2==null then do
+      result=0
+    end
+    else do
+      if text1==null then do
+        result=-1
+      end
+      else do
+        if text2==null then do
+          result=1
+        end
+        else do
+          result=text1.compareToIgnoreCase(text2)
+        end
+      end
+    end
+    return result
+
+class KitchenSink.RollupStateHandler dependent private abstract implements RollupStateListener
+
+
+  method RollupStateHandler
+
+  method expandedChangeVetoed(rollup=Rollup,reason=Vote)
+
+  method expandedChanged(rollup=Rollup)
+
+  class KitchenSink.InfoRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+    infoPivotVersion=Label null
+    infoPivotOrigin=Label null
+    infoJavaVersion=Label null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"info.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.infoPivotVersion=Label namespace.get("info-pivot-version")
+      this.infoPivotVersion.setText(this.infoPivotVersion.getText()||ApplicationContext.getPivotVersion().toString())
+      this.infoPivotOrigin=Label namespace.get("info-pivot-origin")
+      if (ApplicationContext.getOrigin()\==null) then do
+        origin=ApplicationContext.getOrigin().toString()
+      end
+      else do
+        origin=""
+      end
+      this.infoPivotOrigin.setText(this.infoPivotOrigin.getText()||"\""||origin||"\"")
+      this.infoJavaVersion=Label namespace.get("info-java-version")
+      javaVersion=System.getProperty("java.version")
+      this.infoJavaVersion.setText(this.infoJavaVersion.getText()||javaVersion)
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.ButtonsRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties private
+    componentx=Component null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"buttons.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.ListsRollupStateHandler dependent private extends KitchenSink.RollupStateHandler implements Comparator,Filter
+
+
+  properties shared
+    componentx=Component null
+    editableListView=ListView null
+    iconListView=ListView null
+    checkedListView=ListView null
+    iconListButton=ListButton null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"lists.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.editableListView=ListView namespace.get("editableListView")
+      this.iconListView=ListView namespace.get("iconListView")
+      this.checkedListView=ListView namespace.get("checkedListView")
+      this.iconListButton=ListButton namespace.get("iconListButton")
+      rollup.setContent(this.componentx)
+      listData=List this.editableListView.getListData()
+      listData.setComparator(this)
+      disabledItemFilter=Filter
+      disabledItemFilter=this
+      this.iconListView.setDisabledItemFilter(disabledItemFilter)
+      this.iconListButton.setDisabledItemFilter(disabledItemFilter)
+      this.checkedListView.setItemChecked(0,1)
+      this.checkedListView.setItemChecked(2,1)
+      this.checkedListView.setItemChecked(3,1)
+    end
+    return Vote.APPROVE
+
+  method compare(listItem1o=Object,listItem2o=Object) returns int
+    listItem1=ListItem listItem1o
+    listItem2=ListItem listItem2o
+    text1=listItem1.getText()
+    text2=listItem2.getText()
+    return text1.compareToIgnoreCase(text2)
+
+  method include(listItemo=Object) returns boolean
+    listItemx=ListItem listItemo
+    return Character.toLowerCase(listItemx.getText().charAt(0))=="c"
+
+class KitchenSink.TextRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"text.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.CalendarsRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"calendars.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.ColorChoosersRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"color_choosers.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.NavigationRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"navigation.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.SplittersRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"splitters.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      rollup.setContent(this.componentx)
+    end
+    return Vote.APPROVE
+
+class KitchenSink.MenusRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+    menuImageView=ImageView null
+    helpAboutMenuItem=Menu.Item null
+    menuSection=Menu.Section null
+    imageMenuGroup=ButtonGroup null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      dict=Action.getNamedActions()
+      dict.put(String "selectImageAction",KitchenSink.MenusRollupStateHandler.__anon_1_Action())
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"menus.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.menuImageView=ImageView namespace.get("menuImageView")
+      this.helpAboutMenuItem=Menu.Item namespace.get("helpAboutMenuItem")
+      rollup.setContent(this.componentx)
+      do
+        this.menuSection=Menu.Section bxml.readObject(KitchenSink.class,"menu_section.bxml")
+        this.imageMenuGroup=ButtonGroup namespace.get("imageMenuGroup")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      this.menuImageView.setMenuHandler(KitchenSink.MenusRollupStateHandler.__anon_2_MenuHandler_Adapter())
+      listx=this.helpAboutMenuItem.getButtonPressListeners()
+      listx.add(KitchenSink.MenusRollupStateHandler.__anon_3_ButtonPressListener())
+    end
+    return Vote.APPROVE
+
+class KitchenSink.MenusRollupStateHandler.__anon_1_Action dependent private extends Action
+
+
+  method getDescription returns String
+    return "Select Image Action"
+
+  method perform(source=Component)
+    selectedItem=MenusRollupStateHandler.this.imageMenuGroup.getSelection()
+    imageName=String selectedItem.getUserData().get("image")
+    imageURL=getClass().getResource(imageName)
+    imagex=Image ApplicationContext.getResourceCache().get(imageURL)
+    if imagex==null then do
+      do
+        imagex=Image.load(imageURL)
+       catch extsk=TaskExecutionException
+        signal RuntimeException(extsk)
+      end
+      ApplicationContext.getResourceCache().put(imageURL,imagex)
+    end
+    MenusRollupStateHandler.this.menuImageView.setImage(imagex)
+
+class KitchenSink.MenusRollupStateHandler.__anon_2_MenuHandler_Adapter dependent private extends MenuHandler.Adapter
+
+
+  method configureContextMenu(comp=Component,menu=Menu,x=int,y=int) returns boolean
+    menu.getSections().add(MenusRollupStateHandler.this.menuSection)
+    return 0
+
+class KitchenSink.MenusRollupStateHandler.__anon_3_ButtonPressListener dependent private implements ButtonPressListener
+
+
+  method buttonPressed(button=org.apache.pivot.wtk.Button)
+    KitchenSink.this.aboutRequested()
+
+class KitchenSink.MetersRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+    activityIndicator1=ActivityIndicator null
+    activityIndicator2=ActivityIndicator null
+    activityIndicator3=ActivityIndicator null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"meters.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.activityIndicator1=ActivityIndicator namespace.get("activityIndicator1")
+      this.activityIndicator2=ActivityIndicator namespace.get("activityIndicator2")
+      this.activityIndicator3=ActivityIndicator namespace.get("activityIndicator3")
+      rollup.setContent(this.componentx)
+      listx=KitchenSink.this.metersRollup.getRollupStateListeners()
+      listx.add(KitchenSink.MetersRollupStateHandler.__anon_1_RollupStateListener())
+    end
+    return Vote.APPROVE
+
+class KitchenSink.MetersRollupStateHandler.__anon_1_RollupStateListener dependent private implements RollupStateListener
+
+
+  method previewExpandedChange(roll=Rollup) returns Vote
+    return Vote.APPROVE
+
+  method expandedChangeVetoed(roll=Rollup,reason=Vote)
+
+  method expandedChanged(roll=Rollup)
+    MetersRollupStateHandler.this.activityIndicator1.setActive(roll.isExpanded())
+    MetersRollupStateHandler.this.activityIndicator2.setActive(roll.isExpanded())
+    MetersRollupStateHandler.this.activityIndicator3.setActive(roll.isExpanded())
+
+class KitchenSink.SpinnersRollupStateHandler dependent private extends KitchenSink.RollupStateHandler implements SliderValueListener
+
+
+  properties shared
+    componentx=Component null
+    numericSpinner=Spinner null
+    dateSpinner=Spinner null
+    redSlider=Slider null
+    greenSlider=Slider null
+    blueSlider=Slider null
+    colorBorderx=Border null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"spinners.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.numericSpinner=Spinner namespace.get("numericSpinner")
+      this.dateSpinner=Spinner namespace.get("dateSpinner")
+      this.redSlider=Slider namespace.get("redSlider")
+      this.greenSlider=Slider namespace.get("greenSlider")
+      this.blueSlider=Slider namespace.get("blueSlider")
+      this.colorBorderx=Border namespace.get("colorBorder")
+      rollup.setContent(this.componentx)
+      initializeNumericSpinner(this.numericSpinner)
+      initializeDateSpinner(this.dateSpinner)
+      sliderValueListenerx=SliderValueListener
+      sliderValueListenerx=this
+      listv=this.redSlider.getSliderValueListeners()
+      listv.add(sliderValueListenerx)
+      listv=this.greenSlider.getSliderValueListeners()
+      listv.add(sliderValueListenerx)
+      listv=this.blueSlider.getSliderValueListeners()
+      listv.add(sliderValueListenerx)
+      colorx=Color(this.redSlider.getValue(),this.greenSlider.getValue(),this.blueSlider.getValue())
+      dict=this.colorBorderx.getStyles()
+      dict.put("backgroundColor",colorx)
+    end
+    return Vote.APPROVE
+
+  method valueChanged(slider=Slider,previousValue=int)
+    colorx=Color(SpinnersRollupStateHandler.this.redSlider.getValue(),SpinnersRollupStateHandler.this.greenSlider.getValue(),SpinnersRollupStateHandler.this.blueSlider.getValue())
+    dict=SpinnersRollupStateHandler.this.colorBorderx.getStyles()
+    dict.put("backgroundColor",colorx)
+
+  method initializeNumericSpinner(spinner=Spinner) private
+    numericSpinnerDatax=NumericSpinnerData(0,256,4)
+    spinner.setSpinnerData(numericSpinnerDatax)
+    spinner.setSelectedIndex(0)
+
+  method initializeDateSpinner(spinner=Spinner) private
+    lowerBound=CalendarDate(2008,0,0)
+    upperBound=CalendarDate(2019,11,30)
+    spinnerData=CalendarDateSpinnerData(lowerBound,upperBound)
+    today=CalendarDate()
+    spinner.setSpinnerData(spinnerData)
+    spinner.setSelectedItem(today)
+
+class KitchenSink.TablesRollupStateHandler dependent private extends KitchenSink.RollupStateHandler implements TableViewSortListener
+
+
+  properties shared
+    componentx=Component null
+    sortableTableView=TableView null
+    customTableView=TableView null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"tables.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.sortableTableView=TableView namespace.get("sortableTableView")
+      this.customTableView=TableView namespace.get("customTableView")
+      rollup.setContent(this.componentx)
+      columns=this.sortableTableView.getColumns()
+      columns.get(int 0).setHeaderData(TableViewHeaderData("#"))
+      columns.get(int 1).setHeaderData(TableViewHeaderData("A"))
+      columns.get(int 2).setHeaderData(TableViewHeaderData("B"))
+      columns.get(int 3).setHeaderData(TableViewHeaderData("C"))
+      columns.get(int 4).setHeaderData(TableViewHeaderData("D"))
+      tableData=ArrayList(10000)
+      i=0
+      n=tableData.getCapacity()
+      loop while i<n
+        tableRow=HashMap()
+        tableRow.put((Object (String "i")),Object Integer(int i))
+        tableRow.put((Object (String "a")),Object Integer(int Math.round(double Math.random()*10)))
+        tableRow.put((Object (String "b")),Object Integer(int Math.round(double Math.random()*100)))
+        tableRow.put((Object (String "c")),Object Integer(int Math.round(double Math.random()*1000)))
+        tableRow.put((Object (String "d")),Object Integer(int Math.round(double Math.random()*10000)))
+        tableData.add(tableRow)
+        i=i+1
+      end
+      this.sortableTableView.setTableData(tableData)
+      lists=this.sortableTableView.getTableViewSortListeners()
+      lists.add(this)
+      listm=this.customTableView.getComponentMouseButtonListeners()
+      listm.add(KitchenSink.TablesRollupStateHandler.__anon_1_ComponentMouseButtonListener_Adapter())
+    end
+    return Vote.APPROVE
+
+  method sortAdded(tableView=TableView,columnName=String)
+    resort(tableView)
+
+  method sortUpdated(tableView=TableView,columnName=String,previousSortDirection=SortDirection)
+    resort(tableView)
+
+  method sortRemoved(tableView=TableView,columnName=String,sortDirection=SortDirection)
+    resort(tableView)
+
+  method sortChanged(tableView=TableView)
+    resort(tableView)
+
+  method resort(tableView=TableView) private
+    tableDataOfTableView=List tableView.getTableData()
+    tableDataOfTableView.setComparator(TableViewRowComparator(tableView))
+
+class KitchenSink.TablesRollupStateHandler.__anon_1_ComponentMouseButtonListener_Adapter dependent private extends org.apache.pivot.wtk.ComponentMouseButtonListener.Adapter
+
+
+  method mouseClick(comp=Component,button=Mouse.Button,x=int,y=int,count=int) returns boolean
+    if button==Mouse.Button.LEFT then do
+      customTableData=List TablesRollupStateHandler.this.customTableView.getTableData()
+      columnIndex=TablesRollupStateHandler.this.customTableView.getColumnAt(x)
+      if columnIndex==0 then do
+        rowIndex=TablesRollupStateHandler.this.customTableView.getRowAt(y)
+        row=KitchenSink.CustomTableRow customTableData.get(rowIndex)
+        row.setA(\row.getA())
+        customTableData.update(rowIndex,row)
+      end
+    end
+    return 0
+
+class KitchenSink.TreesRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+    editableTreeView=TreeView null
+    checkTreeView=TreeView null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"trees.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.editableTreeView=TreeView namespace.get("editableTreeView")
+      this.checkTreeView=TreeView namespace.get("checkTreeView")
+      rollup.setContent(this.componentx)
+      treeData=TreeBranch this.editableTreeView.getTreeData()
+      treeData.setComparator(KitchenSink.TreeNodeComparator())
+      this.checkTreeView.setDisabledNodeFilter(KitchenSink.TreesRollupStateHandler.__anon_1_Filter())
+      this.checkTreeView.setDisabledCheckmarkFilter(KitchenSink.TreesRollupStateHandler.__anon_2_Filter())
+    end
+    return Vote.APPROVE
+
+class KitchenSink.TreesRollupStateHandler.__anon_1_Filter dependent private implements Filter
+
+
+  method include(treeNodeo=Object) returns boolean
+    treeNodex=TreeNode treeNodeo
+    include=boolean 0
+    if\(treeNodex<=TreeBranch) then do
+      text=treeNodex.getText()
+      if text\==null then do
+        firstCharacter=Rexx Character.toLowerCase(text.charAt(0))
+        include=(firstCharacter.c2d()//2==0)
+      end
+    end
+    return include
+
+class KitchenSink.TreesRollupStateHandler.__anon_2_Filter dependent private implements Filter
+
+
+  method include(treeNodeo=Object) returns boolean
+    treeNodex=TreeNode treeNodeo
+    return (treeNodex<=TreeBranch)
+
+class KitchenSink.DragDropRollupStateHandler dependent private extends KitchenSink.RollupStateHandler implements DragSource,DropTarget
+
+
+  properties shared
+    componentx=Component null
+    imageView1=ImageView null
+    imageView2=ImageView null
+    imageView3=ImageView null
+    imagex=Image null
+    offset=Point null
+    content=LocalManifest null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"dragdrop.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.imageView1=ImageView namespace.get("imageView1")
+      this.imageView2=ImageView namespace.get("imageView2")
+      this.imageView3=ImageView namespace.get("imageView3")
+      rollup.setContent(this.componentx)
+      imageDragSource=this
+      imageDropTarget=this
+      this.imageView1.setDragSource(imageDragSource)
+      this.imageView1.setDropTarget(imageDropTarget)
+      this.imageView2.setDragSource(imageDragSource)
+      this.imageView2.setDropTarget(imageDropTarget)
+      this.imageView3.setDragSource(imageDragSource)
+      this.imageView3.setDropTarget(imageDropTarget)
+    end
+    return Vote.APPROVE
+
+  method dragEnter(comp=Component,dragContent=Manifest,supportedDropActions=int,userDropAction=DropAction) returns DropAction
+    dropActionx=DropAction
+    dropActionx=null
+    imageViewx=ImageView comp
+    if imageViewx.getImage()==null&dragContent.containsImage()&DropAction.MOVE.isSelected(supportedDropActions) then do
+      dropActionx=DropAction.MOVE
+      comp.getStyles().put("backgroundColor","#f0e68c")
+    end
+    return dropActionx
+
+  method dragExit(comp=Component)
+    comp.getStyles().put("backgroundColor",null)
+
+  method dragMove(comp=Component,dragContent=Manifest,supportedDropActions=int,x=int,y=int,userDropAction=DropAction) returns DropAction
+    imageViewx=ImageView comp
+    if imageViewx.getImage()==null&dragContent.containsImage() then do
+      dropact=DropAction.MOVE
+    end
+    else do
+      dropact=null
+    end
+    return dropact
+
+  method userDropActionChange(comp=Component,dragContent=Manifest,supportedDropActions=int,x=int,y=int,userDropAction=DropAction) returns DropAction
+    imageViewx=ImageView comp
+    if imageViewx.getImage()==null&dragContent.containsImage() then do
+      dropact=DropAction.MOVE
+    end
+    else do
+      dropact=null
+    end
+    return dropact
+
+  method drop(comp=Component,dragContent=Manifest,supportedDropActions=int,x=int,y=int,userDropAction=DropAction) returns DropAction
+    dropActionx=DropAction
+    dropActionx=null
+    imageViewx=ImageView comp
+    if imageViewx.getImage()==null&dragContent.containsImage() then do
+      do
+        imageViewx.setImage(dragContent.getImage())
+        dropActionx=DropAction.MOVE
+       catch exio=IOException
+        System.err.println(exio)
+      end
+    end
+    dragExit(comp)
+    return dropActionx
+
+  method beginDrag(comp=Component,x=int,y=int) returns boolean
+    imageViewx=ImageView comp
+    this.imagex=imageViewx.getImage()
+    if this.imagex\==null then do
+      imageViewx.setImage(org.apache.pivot.wtk.media.Image null)
+      this.content=LocalManifest()
+      this.content.putImage(this.imagex)
+      this.offset=Point(x-(imageViewx.getWidth()-this.imagex.getWidth())/2,y-(imageViewx.getHeight()-this.imagex.getHeight())/2)
+    end
+    return (this.imagex\==null)
+
+  method endDrag(comp=Component,dropAction=DropAction)
+    if dropAction==null then do
+      imageViewx=ImageView comp
+      imageViewx.setImage(this.imagex)
+    end
+    this.imagex=null
+    this.offset=null
+    this.content=null
+
+  method isNative returns boolean
+    return 0
+
+  method getContent returns LocalManifest
+    return this.content
+
+  method getRepresentation returns Visual
+    return this.imagex
+
+  method getOffset returns Point
+    return this.offset
+
+  method getSupportedDropActions returns int
+    return DropAction.MOVE.getMask()
+
+class KitchenSink.AlertsRollupStateHandler dependent private extends KitchenSink.RollupStateHandler
+
+
+  properties shared
+    componentx=Component null
+    alertButton=PushButton null
+    promptButton=PushButton null
+    messageTypeGroup=ButtonGroup null
+
+  method previewExpandedChange(rollup=Rollup) returns Vote
+    if this.componentx==null then do
+      bxml=BXMLSerializer()
+      do
+        this.componentx=Component bxml.readObject(KitchenSink.class,"alerts.bxml")
+       catch exio=IOException
+        signal RuntimeException(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      namespace=bxml.getNamespace()
+      this.alertButton=PushButton namespace.get("alertButton")
+      this.promptButton=PushButton namespace.get("promptButton")
+      this.messageTypeGroup=ButtonGroup namespace.get("messageTypeGroup")
+      rollup.setContent(this.componentx)
+      lista=this.alertButton.getButtonPressListeners()
+      lista.add(KitchenSink.AlertsRollupStateHandler.__anon_1_ButtonPressListener())
+      listp=this.promptButton.getButtonPressListeners()
+      listp.add(KitchenSink.AlertsRollupStateHandler.__anon_2_ButtonPressListener())
+    end
+    return Vote.APPROVE
+
+class KitchenSink.AlertsRollupStateHandler.__anon_1_ButtonPressListener dependent private implements ButtonPressListener
+
+
+  method buttonPressed(button=org.apache.pivot.wtk.Button)
+    selection=AlertsRollupStateHandler.this.messageTypeGroup.getSelection()
+    userData=Map
+    do
+      userData=JSONSerializer.parseMap(String selection.getUserData().get("messageInfo"))
+     catch exser=SerializationException
+      signal RuntimeException(exser)
+    end
+    messageType=String userData.get("messageType")
+    if messageType==null then do
+      options=ArrayList()
+      options.add("OK")
+      options.add("Cancel")
+      body=Component
+      body=null
+      serializer=BXMLSerializer()
+      do
+        body=Component serializer.readObject(KitchenSink.class,"alert.bxml")
+       catch exio=java.io.IOException
+        System.err.println(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      alertx=Alert(org.apache.pivot.wtk.MessageType.QUESTION,"Please select your favorite icon:",options,body)
+      alertx.setTitle("Select Icon")
+      alertx.setSelectedOptionIndex(0)
+      decseq=alertx.getDecorators()
+      decseq.update(0,Decorator ReflectionDecorator())
+      alertx.open(KitchenSink.this.win)
+    end
+    else do
+      message=String userData.get("message")
+      Alert.alert((org.apache.pivot.wtk.MessageType org.apache.pivot.wtk.MessageType.valueOf(messageType.toUpperCase())),message,(org.apache.pivot.wtk.Window KitchenSink.this.win))
+    end
+
+class KitchenSink.AlertsRollupStateHandler.__anon_2_ButtonPressListener dependent private implements ButtonPressListener
+
+
+  method buttonPressed(button=org.apache.pivot.wtk.Button)
+    selection=AlertsRollupStateHandler.this.messageTypeGroup.getSelection()
+    userData=Map
+    do
+      userData=JSONSerializer.parseMap(String selection.getUserData().get("messageInfo"))
+     catch exser=SerializationException
+      signal RuntimeException(exser)
+    end
+    messageType=String userData.get("messageType")
+    if messageType==null then do
+      options=ArrayList()
+      options.add("OK")
+      options.add("Cancel")
+      body=Component
+      body=null
+      serializer=BXMLSerializer()
+      do
+        body=Component serializer.readObject(KitchenSink.class,"alert.bxml")
+       catch exio=java.io.IOException
+        System.err.println(exio)
+       catch exser=SerializationException
+        signal RuntimeException(exser)
+      end
+      promptx=Prompt(org.apache.pivot.wtk.MessageType.QUESTION,"Please select your favorite icon:",options,body)
+      promptx.setTitle("Select Icon")
+      promptx.setSelectedOptionIndex(0)
+      decseq=promptx.getDecorators()
+      decseq.update(0,Decorator ReflectionDecorator())
+      promptx.open(KitchenSink.this.win)
+    end
+    else do
+      message=String userData.get("message")
+      Prompt.prompt((org.apache.pivot.wtk.MessageType org.apache.pivot.wtk.MessageType.valueOf(messageType.toUpperCase())),message,(org.apache.pivot.wtk.Window KitchenSink.this.win))
+    end
+
+class KitchenSink.AppRunnable dependent private implements Runnable
+
+
+  method run
+    KitchenSink.this.infoRollup.setExpanded(1)
