@@ -1,203 +1,79 @@
---- oorexx-haiku/CMakeLists.txt.~1~	2019-01-13 11:33:43.044564480 +0000
-+++ oorexx-haiku/CMakeLists.txt	2019-01-15 09:23:45.311427072 +0000
-@@ -301,7 +301,7 @@
+--- oorexx-haiku-5.0.0/CMakeLists.txt.~1~	2019-01-18 12:00:55.045613056 +0000
++++ oorexx-haiku-5.0.0/CMakeLists.txt	2019-01-18 19:19:30.486801408 +0000
+@@ -90,7 +90,7 @@
+ 
+ 
+ # OOREXX_SHEBANG_PROGRAM default:
+-set (OOREXX_SHEBANG_PROGRAM "/usr/bin/env rexx")
++set (OOREXX_SHEBANG_PROGRAM "/bin/env rexx")
+ 
+ # if ORX_SHEBANG defined change default shebang accordingly
+ if (ORX_SHEBANG)
+@@ -248,7 +248,7 @@
+    if( APPLE )
+        SET( CMAKE_INSTALL_RPATH "@executable_path/../lib")
+    else()
+-       SET( CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
++       SET( CMAKE_INSTALL_RPATH "/boot/home/config/non-packaged/lib")
+    endif()
+ 
+    # add the automatically determined parts of the RPATH
+@@ -336,7 +336,7 @@
              -DORX_SHARED_LIBRARY_EXT="${CMAKE_SHARED_LIBRARY_SUFFIX}"
              -DORX_REXXPATH="${CMAKE_REXXPATH}"
              -D${ORX_SYS_STR} -DOPSYS_${ORX_SYS_STR} -DHAVE_CONFIG_H)
 -    set (ORX_SYSLIB_DL dl)
-+    #set (ORX_SYSLIB_DL dl)
++    set (ORX_SYSLIB_DL root)
      set (ORX_SYSLIB_PTHREAD pthread)
  endif ()
  
-@@ -364,7 +364,7 @@
+@@ -399,7 +399,7 @@
                             return 0;}"
                            HAVE_PTHREAD_MUTEX_RECURSIVE)
    # this requires -ldl on the link
 -  set(CMAKE_REQUIRED_LIBRARIES dl)
-+  #set(CMAKE_REQUIRED_LIBRARIES dl)
++  set(CMAKE_REQUIRED_LIBRARIES root)
    check_c_source_compiles("#include <dlfcn.h>
                             int main(int arg, char **argv) {
                             Dl_info DlInfo;
-@@ -399,6 +399,15 @@
+@@ -434,6 +434,9 @@
                            HAVE_UNION_SEMUN)
    check_include_file(unistd.h HAVE_UNISTD_H)
    check_include_file(usersec.h HAVE_USERSEC_H)
 +  if (CMAKE_SYSTEM_NAME MATCHES "Haiku")
 +    set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} network)
-+    set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} crypto)
-+    if (NOT NCURSES_H_)
-+      check_include_file(ncurses.h HAVE_NCURSES_H)
-+    else ()
-+      include_directories(/boot/system/develop)
-+    endif (NOT NCURSES_H_)
 +  endif ()
    if (CMAKE_SYSTEM_NAME MATCHES "(SunOS|Solaris)")
      check_library_exists(socket getaddrinfo "" HAVE_LIBSOCKET)
      if (HAVE_LIBSOCKET)
-@@ -1290,7 +1299,7 @@
+@@ -1360,7 +1363,7 @@
  # gcc (at least on Linux) requires linking with -lcrypt
  # clang (at least on Darwin) doesn't have libcrypt
  if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 -    target_link_libraries(rxunixsys rexx rexxapi crypt ${CMAKE_REQUIRED_LIBRARIES})
-+    target_link_libraries(rxunixsys rexx rexxapi ${CMAKE_REQUIRED_LIBRARIES})
++    target_link_libraries(rxunixsys rexx rexxapi root ${CMAKE_REQUIRED_LIBRARIES})
  else ()
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
-     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++ -lc++abi")
---- oorexx-haiku/common/platform/unix/SysFile.cpp.~1~	2019-01-13 11:34:33.046661632 +0000
-+++ oorexx-haiku/common/platform/unix/SysFile.cpp	2019-01-15 09:18:48.243793920 +0000
-@@ -126,7 +126,7 @@
-     flags = openFlags;           // save the initial flag values
+     target_link_libraries(rxunixsys rexx rexxapi ${CMAKE_REQUIRED_LIBRARIES})
+ endif ()
+--- oorexx-haiku-5.0.0/common/platform/unix/SysFile.cpp.~1~	2019-01-13 11:34:33.017301504 +0000
++++ oorexx-haiku-5.0.0/common/platform/unix/SysFile.cpp	2019-01-15 13:07:02.039059456 +0000
+@@ -62,7 +62,7 @@
+ # include <sys/filio.h>
+ #endif
  
-     // we must open this with the NOINHERIT flag added
--    fileHandle = ::open64(name, openFlags, (mode_t)openMode);
-+    fileHandle = ::open(name, openFlags, (mode_t)openMode);
-     if ( fileHandle == -1 )
-     {
-         errInfo = errno;
-@@ -145,7 +145,7 @@
-     {
-         // mark this true, and position at the end
-         append = true;
--        lseek64(fileHandle, 0, SEEK_END);
-+        lseek(fileHandle, 0, SEEK_END);
-     }
- 
-     // set eof flag
-@@ -480,7 +480,7 @@
-             // last virtual read.
-             int64_t offset = filePointer - bufferedInput + bufferPosition;
-             // set the absolute position
--            lseek64(fileHandle, offset, SEEK_SET);
-+            lseek(fileHandle, offset, SEEK_SET);
-             bufferedInput = 0;
-             bufferPosition = 0;
-             // we're switching modes.
-@@ -538,7 +538,7 @@
-             if ((flags & O_APPEND) != 0)
-             {
-                 // seek to the end of the file, return if there is an error
--                if (lseek64(fileHandle, 0, SEEK_END) < 0)
-+                if (lseek(fileHandle, 0, SEEK_END) < 0)
-                 {
-                     errInfo = errno;
-                     return false;
-@@ -903,7 +903,7 @@
-     else
-     {
-         // go to the absolute position
--        position = lseek64(fileHandle, location, SEEK_SET);
-+        position = lseek(fileHandle, location, SEEK_SET);
-         // this return the error indicator?
-         if (position == -1)
-         {
-@@ -949,15 +949,15 @@
-         switch (direction)
-         {
-             case SEEK_SET:
--                position = lseek64(fileHandle, offset, SEEK_SET);
-+                position = lseek(fileHandle, offset, SEEK_SET);
-                 break;
- 
-             case SEEK_CUR:
--                position = lseek64(fileHandle, offset, SEEK_CUR);
-+                position = lseek(fileHandle, offset, SEEK_CUR);
-                 break;
- 
-             case SEEK_END:
--                position = lseek64(fileHandle, offset, SEEK_END);
-+                position = lseek(fileHandle, offset, SEEK_END);
-                 break;
- 
-             default:
-@@ -986,7 +986,7 @@
-     else
-     {
-         // get the stream postion
--        position = lseek64(fileHandle, 0, SEEK_CUR);
-+        position = lseek(fileHandle, 0, SEEK_CUR);
-         if (position == -1)
-         {
-             return false;
-@@ -1012,8 +1012,8 @@
-         // we might have pending output that might change the size
-         flush();
-         // have a handle, use fstat() to get the info
--        struct stat64 fileInfo;
--        if (fstat64(fileHandle, &fileInfo) == 0)
-+        struct stat fileInfo;
-+        if (fstat(fileHandle, &fileInfo) == 0)
-         {
-             // regular file?  return the defined size
-             if ((fileInfo.st_mode & S_IFREG) != 0)
-@@ -1041,8 +1041,8 @@
- bool SysFile::getSize(const char *name, int64_t &size)
- {
-     // the handle is not active, use the name
--    struct stat64 fileInfo;
--    if (stat64(name, &fileInfo) == 0)
-+    struct stat fileInfo;
-+    if (stat(name, &fileInfo) == 0)
-     {
-         // regular file?  return the defined size
-         if ((fileInfo.st_mode & S_IFREG) != 0)
-@@ -1074,8 +1074,8 @@
-     if (fileHandle >= 0)
-     {
-         // have a handle, use fstat() to get the info
--        struct stat64 fileInfo;
--        if (fstat64(fileHandle, &fileInfo) == 0)
-+        struct stat fileInfo;
-+        if (fstat(fileHandle, &fileInfo) == 0)
-         {
-             // regular file?  return the defined size
-             if ((fileInfo.st_mode & S_IFREG) != 0)
-@@ -1099,8 +1099,8 @@
- {
-     time = "";         // default return value
-     // the handle is not active, use the name
--    struct stat64 fileInfo;
--    if (stat64(name, &fileInfo) == 0)
-+    struct stat fileInfo;
-+    if (stat(name, &fileInfo) == 0)
-     {
-         // regular file?  return the defined size
-         if ((fileInfo.st_mode & (S_IFREG | S_IFDIR)) != 0)
-@@ -1131,8 +1131,8 @@
-         isTTY = true;
-     }
-     // have a handle, use fstat() to get the info
--    struct stat64 fileInfo;
--    if (fstat64(fileHandle, &fileInfo) == 0)
-+    struct stat fileInfo;
-+    if (fstat(fileHandle, &fileInfo) == 0)
-     {
-         //  character device?  set those characteristics
-         if ((fileInfo.st_mode & S_IFCHR) != 0)
---- oorexx-haiku/extensions/platform/unix/rxunixsys/rxunixsys.cpp.~1~	2019-01-13 11:34:33.049807360 +0000
-+++ oorexx-haiku/extensions/platform/unix/rxunixsys/rxunixsys.cpp	2019-01-15 09:18:48.315359232 +0000
-@@ -797,14 +797,14 @@
-              CSTRING, ichar)
- {
-     struct tm *ftime;
--    struct stat64 mystat;
-+    struct stat mystat;
-     char buf[32];  // used for both the file times and the permissions
- 
-     if (strlen(fname) == 0 || strlen(ichar) == 0) {
-         context->InvalidRoutine();
-         return context->NullString();
-     }
--    int retc = stat64(fname, &mystat);
-+    int retc = stat(fname, &mystat);
-     if (retc != 0) {
-         return context->NullString();
-     }
+-#if defined __APPLE__
++#if defined __APPLE__ || defined(__HAIKU__)
+ # define lseek64 lseek
+ # define open64 open
+ // avoid warning: '(f)stat64' is deprecated: first deprecated in macOS 10.6
+--- oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.cpp.~1~	2019-01-13 11:34:33.020447232 +0000
++++ oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.cpp	2019-01-15 13:19:52.417071104 +0000
 @@ -1108,7 +1108,7 @@
   *
   * @return        Array of file names.
   */
 -#if !defined(OPENBSD)
-+#if !defined(OPENBSD) && !defined(__HAIKU__)
++#if !defined(OPENBSD)  && !defined(__HAIKU__)
  RexxRoutine1(RexxObjectPtr,
               SysWordexp,
               CSTRING, inexp)
@@ -206,23 +82,43 @@
      REXX_TYPED_ROUTINE(SysGetservbyname, SysGetservbyname),
      REXX_TYPED_ROUTINE(SysGetservbyport, SysGetservbyport),
 -#if !defined(OPENBSD)    
-+#if !defined(OPENBSD)  && !defined(__HAIKU__)   
++#if !defined(OPENBSD) && !defined(__HAIKU__)
      REXX_TYPED_ROUTINE(SysWordexp, SysWordexp),
  #endif    
  #ifdef HAVE_XATTR_H
---- oorexx-haiku/extensions/platform/unix/rxunixsys/rxunixsys.h.~1~	2019-01-13 11:34:33.049807360 +0000
-+++ oorexx-haiku/extensions/platform/unix/rxunixsys/rxunixsys.h	2019-01-15 09:18:48.374079488 +0000
-@@ -60,7 +60,7 @@
+--- oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.h.~1~	2019-01-13 11:34:33.020447232 +0000
++++ oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.h	2019-01-15 13:16:25.698089472 +0000
+@@ -59,7 +59,7 @@
+ #include <grp.h>
  #include <time.h>
  #include <netdb.h>
- #if !defined(OPENBSD)
--#include <wordexp.h>
-+/* #include <wordexp.h> */
+-#if !defined(OPENBSD)
++#if !defined(OPENBSD) && !defined(__HAIKU__)
+ #include <wordexp.h>
  #endif
  #if !defined(AIX) && !defined(OPENBSD)
- #include <alloca.h>
---- oorexx-haiku/extensions/rexxutil/platform/unix/rexxutil.cpp.~1~	2019-01-13 11:34:14.062390272 +0000
-+++ oorexx-haiku/extensions/rexxutil/platform/unix/rexxutil.cpp	2019-01-15 09:18:48.454033408 +0000
+@@ -83,6 +83,10 @@
+ # define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
+ #endif
+ 
++#if defined(__HAIKU__)
++# define stat64 stat
++#endif
++
+ #ifdef __sun
+ # define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
+ #endif
+--- oorexx-haiku-5.0.0/extensions/rexxutil/platform/unix/rexxutil.cpp.~1~	2019-01-13 11:34:14.033030144 +0000
++++ oorexx-haiku-5.0.0/extensions/rexxutil/platform/unix/rexxutil.cpp	2019-01-15 13:57:47.580124672 +0000
+@@ -244,7 +244,7 @@
+ };
+ #endif
+ 
+-#if defined __APPLE__
++#if defined __APPLE__ || __HAIKU__
+ # define open64 open
+ // avoid warning: '(l)stat64' is deprecated: first deprecated in macOS 10.6
+ # define stat64 stat
 @@ -264,7 +264,7 @@
  #define  CH_EOF         0x1A           /* end of file marker         */
  #define  CH_CR          '\r'           /* carriage return character  */
@@ -257,23 +153,6 @@
  
    for(;*string != '\0';string++){        /* while not at the end       */
      *string = toupper(*string);
-@@ -578,14 +578,14 @@
-    const char  *file,                  /* file name                  */
-    GetFileData *filedata )             /* global file information    */
- {
--   struct stat64 finfo;                /* file information           */
-+   struct stat finfo;                /* file information           */
-    char *      endptr = NULL;          /* end of buffer pointer      */
- 
-                                        /* try to open the file       */
-   if((filedata->handle = fopen(file,"r")) == NULL)
-     return (1);                        /* return failure             */
-                                        /* retrieve the file size     */
--  if((stat64(file,&finfo) == -1)||(!finfo.st_size)){
-+  if((stat(file,&finfo) == -1)||(!finfo.st_size)){
-     fclose(filedata->handle);          /* close the file             */
-     return (1);                        /* and quit                   */
-   }
 @@ -1622,7 +1622,7 @@
    ldp.count = 0;
    strcpy(ldp.varname, args[2].strptr);
@@ -297,56 +176,20 @@
      int priority;                       /* Priority                           */
                                          /* current priority                   */
 -    priority = getpriority(PRIO_PROCESS, getpid());
-+    /* priority = priority(PRIO_PROCESS, getpid()); */
++    /* priority = getpriority(PRIO_PROCESS, getpid()); */
  
                                          /* Set new priority                   */
 -    setpriority(PRIO_PROCESS, getpid(),-level);
-+    /* priority(PRIO_PROCESS, getpid(),-level); */
++    /* setpriority(PRIO_PROCESS, getpid(),-level); */
      rc = 0;
    }
  
-@@ -4643,7 +4643,7 @@
- 
- size_t RexxEntry SysGetFileDateTime(const char *name, size_t numargs, CONSTRXSTRING args[], const char *queuename, PRXSTRING retstr)
- {
--  struct    stat64 buf;
-+  struct    stat buf;
-   struct    tm *newtime;
-   const char *dir_buf = NULL;            /* full directory path        */
-   bool      fOk = true;
-@@ -4663,7 +4663,7 @@
-     dir_buf = args[0].strptr;
-   }
- 
--  if (stat64(dir_buf, &buf) < 0)
-+  if (stat(dir_buf, &buf) < 0)
-   {
-      fOk = false;
-   }
-@@ -4729,7 +4729,7 @@
-   struct utimbuf timebuf;
-   struct tm *newtime;
-   time_t ltime;
--  struct stat64 buf;
-+  struct stat buf;
-   const char *dir_buf = NULL;
-   bool      alloc_Flag = false;
- 
-@@ -4752,7 +4752,7 @@
-     dir_buf = args[0].strptr;
-   }
- 
--  if (stat64(dir_buf, &buf) < 0)
-+  if (stat(dir_buf, &buf) < 0)
-   {
-      fOk =  false;
-   }
 @@ -5234,7 +5234,7 @@
    else
    if (!strcasecmp(args[0].strptr, "PPRIO"))
    {
 -    sprintf(retstr->strptr, "%d", getpriority(PRIO_PROCESS, 0));
-+    /* sprintf(retstr->strptr, "%d", priority(PRIO_PROCESS, 0)); */
++    /* sprintf(retstr->strptr, "%d", getpriority(PRIO_PROCESS, 0)); */
      retstr->strlength = strlen(retstr->strptr);
      return VALID_ROUTINE;                /* no error on call           */
    }
@@ -375,94 +218,8 @@
      retstr->strlength = strlen(retstr->strptr);
      return VALID_ROUTINE;                /* no error on call           */
    }
-@@ -5487,14 +5487,14 @@
- 
-     if (SamePaths(fromFile, toFile)) return EEXIST; // did not find a better error code to return
- 
--    struct stat64 fromStat;
--    if (stat64(fromFile, &fromStat) == -1) return errno;
--    AutoClose fromHandle = open64(fromFile, O_RDONLY);
-+    struct stat fromStat;
-+    if (stat(fromFile, &fromStat) == -1) return errno;
-+    AutoClose fromHandle = open(fromFile, O_RDONLY);
-     if (fromHandle == -1) return errno;
- 
--    struct stat64 toStat;
--    bool toFileCreated = (stat64(toFile, &toStat) == -1);
--    AutoClose toHandle = open64(toFile, O_WRONLY | O_CREAT | O_TRUNC, 0666); // default access mode for the moment (like fopen)
-+    struct stat toStat;
-+    bool toFileCreated = (stat(toFile, &toStat) == -1);
-+    AutoClose toHandle = open(toFile, O_WRONLY | O_CREAT | O_TRUNC, 0666); // default access mode for the moment (like fopen)
-     if (toHandle == -1) return errno;
- 
-     char buffer[IBUF_LEN];
-@@ -5543,12 +5543,12 @@
- 
-     if (SamePaths(fromFile, toFile)) return EEXIST; // did not find a better error code to return
- 
--    struct stat64 fromStat;
--    if (lstat64(fromFile, &fromStat) == -1) return errno;
-+    struct stat fromStat;
-+    if (lstat(fromFile, &fromStat) == -1) return errno;
-     bool fromFileIsSymbolicLink = S_ISLNK(fromStat.st_mode);
- 
--    struct stat64 toStat;
--    bool toFileExists = (lstat64(toFile, &toStat) == 0);
-+    struct stat toStat;
-+    bool toFileExists = (lstat(toFile, &toStat) == 0);
-     bool toFileIsSymbolicLink = (toFileExists && S_ISLNK(toStat.st_mode));
- 
-     AutoFree toFileNewname;
-@@ -5659,9 +5659,9 @@
- 
- RexxRoutine1(logical_t, SysIsFile, CSTRING, filename)
- {
--    struct stat64 finfo;                   /* return buf for the finfo   */
-+    struct stat finfo;                   /* return buf for the finfo   */
- 
--    int rc = stat64(filename, &finfo);     /* read the info about it     */
-+    int rc = stat(filename, &finfo);     /* read the info about it     */
-     // check the flag settings for a regular file
-     return rc == 0 && (S_ISREG(finfo.st_mode) || S_ISBLK(finfo.st_mode));
- }
-@@ -5678,9 +5678,9 @@
- 
- RexxRoutine1(logical_t, SysIsFileDirectory, CSTRING, filename)
- {
--    struct stat64 finfo;                   /* return buf for the finfo   */
-+    struct stat finfo;                   /* return buf for the finfo   */
- 
--    int rc = stat64(filename, &finfo);     /* read the info about it     */
-+    int rc = stat(filename, &finfo);     /* read the info about it     */
-     return rc == 0 && S_ISDIR(finfo.st_mode);
- }
- 
-@@ -5696,9 +5696,9 @@
- 
- RexxRoutine1(logical_t, SysIsFileLink, CSTRING, filename)
- {
--    struct stat64 finfo;                   /* return buf for the finfo   */
-+    struct stat finfo;                   /* return buf for the finfo   */
- 
--    int rc = lstat64(filename, &finfo);    /* read the info about it     */
-+    int rc = lstat(filename, &finfo);    /* read the info about it     */
-     return rc == 0 && S_ISLNK(finfo.st_mode);
- }
- 
-@@ -5714,9 +5714,9 @@
- 
- RexxRoutine1(logical_t, SysFileExists, CSTRING, filename)
- {
--    struct stat64 finfo;                   /* return buf for the finfo   */
-+    struct stat finfo;                   /* return buf for the finfo   */
- 
--    return stat64(filename, &finfo) == 0; /* read the info about it     */
-+    return stat(filename, &finfo) == 0; /* read the info about it     */
- }
- 
- 
---- oorexx-haiku/extensions/rxsock/rxsock.cpp.~1~	2019-01-13 11:34:33.063700992 +0000
-+++ oorexx-haiku/extensions/rxsock/rxsock.cpp	2019-01-15 09:18:48.514064384 +0000
+--- oorexx-haiku-5.0.0/extensions/rxsock/rxsock.cpp.~1~	2019-01-13 11:34:33.034340864 +0000
++++ oorexx-haiku-5.0.0/extensions/rxsock/rxsock.cpp	2019-01-15 14:07:56.652476416 +0000
 @@ -520,7 +520,7 @@
          case EPROTOTYPE      : pszErrno = "EPROTOTYPE";           break;
          case ENOPROTOOPT     : pszErrno = "ENOPROTOOPT";          break;
@@ -481,8 +238,17 @@
          case ETIMEDOUT       : pszErrno = "ETIMEDOUT";            break;
          case ECONNREFUSED    : pszErrno = "ECONNREFUSED";         break;
          case ELOOP           : pszErrno = "ELOOP";                break;
---- oorexx-haiku/extensions/rxsock/rxsockfn.cpp.~1~	2019-01-13 11:34:33.063963136 +0000
-+++ oorexx-haiku/extensions/rxsock/rxsockfn.cpp	2019-01-15 09:18:48.574881792 +0000
+--- oorexx-haiku-5.0.0/extensions/rxsock/rxsockfn.cpp.~1~	2019-01-13 11:34:33.034603008 +0000
++++ oorexx-haiku-5.0.0/extensions/rxsock/rxsockfn.cpp	2019-01-15 15:14:20.111673344 +0000
+@@ -358,7 +358,7 @@
+     ia.s_addr = (*(uint32_t *)pHostEnt->h_addr);// in network byte order already
+     return context->String(inet_ntoa(ia));
+ #else
+-#if defined(OPSYS_AIX) || defined(OPSYS_LINUX)
++#if defined(OPSYS_AIX) || defined(OPSYS_LINUX) || defined (__HAIKU__)
+ #define h_addr h_addr_list[0]
+ 
+     char     pszBuff[64];                    /* buffer for ip address*/
 @@ -381,7 +381,7 @@
      ia.s_addr = (*(uint32_t *)pHostEnt->h_addr);// in network byte order already
      return context->String(inet_ntoa(ia));
@@ -492,8 +258,19 @@
      // set the errno information
      cleanup(context);
      return context->String(inet_ntoa(ia));
---- oorexx-haiku/interpreter/platform/unix/PlatformDefinitions.h.~1~	2019-01-13 11:33:47.031195136 +0000
-+++ oorexx-haiku/interpreter/platform/unix/PlatformDefinitions.h	2019-01-15 09:18:48.637272064 +0000
+--- oorexx-haiku-5.0.0/interpreter/platform/unix/SysFileSystem.cpp.~1~	2019-01-13 11:33:47.002359296 +0000
++++ oorexx-haiku-5.0.0/interpreter/platform/unix/SysFileSystem.cpp	2019-01-15 14:30:56.450625536 +0000
+@@ -62,7 +62,7 @@
+ #include "Utilities.hpp"
+ #include "ActivityManager.hpp"
+ 
+-#if defined __APPLE__
++#if defined __APPLE__ || __HAIKU__
+ // avoid warning: '(f)stat64' is deprecated: first deprecated in macOS 10.6
+ # define stat64 stat
+ # define fstat64 fstat
+--- oorexx-haiku-5.0.0/interpreter/platform/unix/PlatformDefinitions.h	2019-01-13 11:33:47.002097152 +0000
++++ oorexx-haiku-5.0.0/interpreter/platform/unix/PlatformDefinitions.h.~1~	2019-01-15 14:28:51.007340032 +0000
 @@ -130,7 +130,7 @@
  /* appropriate for this file system.                                          */
  /******************************************************************************/
@@ -503,148 +280,3 @@
  #define line_end "\n"
  #define line_end_size 1
  
---- oorexx-haiku/interpreter/platform/unix/SysFileSystem.cpp.~1~	2019-01-13 11:33:47.031719424 +0000
-+++ oorexx-haiku/interpreter/platform/unix/SysFileSystem.cpp	2019-01-15 09:18:48.693895168 +0000
-@@ -213,10 +213,10 @@
-  */
- bool SysFileSystem::fileExists(const char * fname)
- {
--    struct stat64 filestat;              // file attributes
-+    struct stat filestat;              // file attributes
-     int rc;                              // stat function return code
- 
--    rc = stat64(fname, &filestat);
-+    rc = stat(fname, &filestat);
-     if (rc == 0)
-     {
-         if (S_ISREG(filestat.st_mode))
-@@ -482,10 +482,10 @@
-         return false;
-     }
- 
--    struct stat64 dummy;                 /* structure for stat system calls   */
-+    struct stat dummy;                 /* structure for stat system calls   */
- 
-     // ok, if this exists, life is good.  Return it.
--    if (stat64(resolvedName, &dummy) == 0)           /* look for file         */
-+    if (stat(resolvedName, &dummy) == 0)           /* look for file         */
-     {
-         // this needs to be a regular file
-         if (S_ISREG(dummy.st_mode))
-@@ -537,8 +537,8 @@
-         // a failure here means an invalid name of some sort
-         if (canonicalizeName(resolvedName))
-         {
--            struct stat64 dummy;
--            if (stat64(resolvedName, &dummy) == 0)   /* If file is found,     */
-+            struct stat dummy;
-+            if (stat(resolvedName, &dummy) == 0)   /* If file is found,     */
-             {
-                 // this needs to be a regular file
-                 if (S_ISREG(dummy.st_mode))
-@@ -785,9 +785,9 @@
-  */
- bool SysFileSystem::isDirectory(const char *name)
- {
--    struct stat64 finfo;                 /* return buf for the finfo   */
-+    struct stat finfo;                 /* return buf for the finfo   */
- 
--    int rc = stat64(name, &finfo);       /* read the info about it     */
-+    int rc = stat(name, &finfo);       /* read the info about it     */
-     return rc == 0 && S_ISDIR(finfo.st_mode);
- }
- 
-@@ -830,9 +830,9 @@
-  */
- bool SysFileSystem::isFile(const char *name)
- {
--    struct stat64 finfo;                 /* return buf for the finfo   */
-+    struct stat finfo;                 /* return buf for the finfo   */
- 
--    int rc = stat64(name, &finfo);       /* read the info about it     */
-+    int rc = stat(name, &finfo);       /* read the info about it     */
-     return rc == 0 && (S_ISREG(finfo.st_mode) || S_ISBLK(finfo.st_mode));
- }
- 
-@@ -846,9 +846,9 @@
-  */
- bool SysFileSystem::exists(const char *name)
- {
--    struct stat64 finfo;                 /* return buf for the finfo   */
-+    struct stat finfo;                 /* return buf for the finfo   */
- 
--    int rc = stat64(name, &finfo);       /* read the info about it     */
-+    int rc = stat(name, &finfo);       /* read the info about it     */
-     return rc == 0;
- }
- 
-@@ -910,9 +910,9 @@
-  */
- int64_t SysFileSystem::getLastModifiedDate(const char *name)
- {
--    struct stat64 st;
-+    struct stat st;
- 
--    if (stat64(name, &st))
-+    if (stat(name, &st))
-     {
-         return -1;
-     }
-@@ -931,9 +931,9 @@
-  */
- int64_t SysFileSystem::getLastAccessDate(const char *name)
- {
--    struct stat64 st;
-+    struct stat st;
- 
--    if (stat64(name, &st))
-+    if (stat(name, &st))
-     {
-         return -1;
-     }
-@@ -950,8 +950,8 @@
-  */
- uint64_t SysFileSystem::getFileLength(const char *name)
- {
--    struct stat64 st;
--    if (stat64(name, &st) != 0)
-+    struct stat st;
-+    if (stat(name, &st) != 0)
-     {
-         return 0;
-     }
-@@ -1024,9 +1024,9 @@
-  */
- bool SysFileSystem::setLastModifiedDate(const char *name, int64_t time)
- {
--    struct stat64 statbuf;
-+    struct stat statbuf;
-     struct utimbuf timebuf;
--    if (stat64(name, &statbuf) != 0)
-+    if (stat(name, &statbuf) != 0)
-     {
-         return false;
-     }
-@@ -1047,9 +1047,9 @@
-  */
- bool SysFileSystem::setLastAccessDate(const char *name, int64_t time)
- {
--    struct stat64 statbuf;
-+    struct stat statbuf;
-     struct utimbuf timebuf;
--    if (stat64(name, &statbuf) != 0)
-+    if (stat(name, &statbuf) != 0)
-     {
-         return false;
-     }
-@@ -1070,8 +1070,8 @@
-  */
- bool SysFileSystem::setFileReadOnly(const char *name)
- {
--    struct stat64 buffer;
--    if (stat64(name, &buffer) != 0)
-+    struct stat buffer;
-+    if (stat(name, &buffer) != 0)
-     {
-         return false;
-     }
