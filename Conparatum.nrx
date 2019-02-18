@@ -1,0 +1,1285 @@
+package com.agrellum.conparatum
+
+import android.app.Activity
+import android.content
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.content.res.TypedArray
+import android.net
+import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.util.DisplayMetrics
+import android.view
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Gallery
+import android.widget.Gallery.LayoutParams
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ImageView.ScaleType
+import android.widget.TextView
+import android.widget.Toast
+import android.widget.ViewSwitcher
+import java.util.List
+
+class Conparatum extends Activity implements -
+    android.speech.tts.TextToSpeech.OnInitListener, -
+    android.view.View.OnClickListener, -
+    android.widget.AdapterView.OnItemClickListener
+    
+    properties private
+    
+    grade_book = SharedPreferences
+    
+    teacher = TextToSpeech
+    
+    speech_enabled = 0
+    
+    use_voice = 0
+    
+    mBundle = 0
+    
+    chalkboard = Gallery
+    
+    lesson_planner = ImageAdapter
+    
+    book_number = 0
+    
+    dog_ear = 0
+    
+    subject = ImageButton
+    
+    attempts = 0
+    
+    success = 0
+    
+    posted = TextView
+    
+    test_type = ImageButton
+    
+    test_format = 0
+    
+    reply_a = Button
+    
+    reply_b = Button
+    
+    reply_c = Button
+    
+    reply_d = Button
+    
+    spelt = EditText
+    
+    check_spelt = Button
+    
+    switcher = ViewSwitcher
+    
+  method onCreate(savedInstanceState=Bundle)
+    
+    super.onCreate(savedInstanceState)
+    
+    setContentView(R.layout.main)
+    
+    switcher = ViewSwitcher this.findViewById(R.id.ViewSwitcher1)
+    
+    this.grade_book = SharedPreferences -
+        getPreferences(android.content.Context.MODE_PRIVATE)
+        
+    if savedInstanceState \= null then do
+        
+        use_voice = savedInstanceState.getString("use_voice")
+        
+        book_number = savedInstanceState.getString("book_number")
+        
+        dog_ear = savedInstanceState.getString("dog_ear")
+        
+        attempts = savedInstanceState.getString("attempts")
+        
+        success = savedInstanceState.getString("success")
+        
+        test_format = savedInstanceState.getString("test_format")
+        
+    end
+    
+    teacher = TextToSpeech(getApplicationContext(),this)
+    
+    chalkboard = Gallery findViewById(R.id.chalkboard)
+    
+    lesson_planner = ImageAdapter(this, book_number)
+    
+    chalkboard.setAdapter(android.widget.SpinnerAdapter lesson_planner)
+    
+    chalkboard.setOnItemClickListener( -
+        android.widget.AdapterView.OnItemClickListener this)
+        
+    chalkboard.setSelection(dog_ear)
+    
+    subject = ImageButton this.findViewById(R.id.subject)
+    
+    subject.setOnClickListener(this)
+    
+    posted = TextView this.findViewById(R.id.posted)
+    
+    if attempts > 0 then do
+        
+        this.scored("")
+        
+    end
+    
+    else do
+        
+        posted.setText(this.getString(R.string.grade) || " - " || "  0")
+        
+    end
+    
+    test_type = ImageButton this.findViewById(R.id.test_type)
+    
+    if test_format = 1 then do
+        
+        test_type.setImageResource(R.drawable.ic_spell)
+        
+        switcher.showNext()
+        
+    end
+    
+    test_type.setOnClickListener(this)
+    
+    reply_a = Button this.findViewById(R.id.reply_a)
+    
+    reply_a.setOnClickListener(this)
+    
+    reply_b = Button this.findViewById(R.id.reply_b)
+    
+    reply_b.setOnClickListener(this)
+    
+    reply_c = Button this.findViewById(R.id.reply_c)
+    
+    reply_c.setOnClickListener(this)
+    
+    reply_d = Button this.findViewById(R.id.reply_d)
+    
+    reply_d.setOnClickListener(this)
+    
+    check_spelt = Button this.findViewById(R.id.check_spelt)
+    
+    check_spelt.setOnClickListener(this)
+    
+    spelt = EditText this.findViewById(R.id.spelt)
+    
+    if savedInstanceState \= null then do
+        
+        reply_a.setText(savedInstanceState.getString("reply_a"))
+        
+        reply_b.setText(savedInstanceState.getString("reply_b"))
+        
+        reply_c.setText(savedInstanceState.getString("reply_c"))
+        
+        reply_d.setText(savedInstanceState.getString("reply_d"))
+        
+        spelt.setText(savedInstanceState.getString("user_entry"))
+        
+        this.testing(reply_a.getText() \= "")
+        
+    end
+    
+    if savedInstanceState == null then do
+        
+        mBundle = 1
+        
+        this.empty_data()
+        
+        this.testing(0)
+        
+    end
+    
+  method onInit( status=int )
+    
+    if status == TextToSpeech.SUCCESS then do
+        
+        data = teacher.getLanguage().toString()
+        
+        if data.equals("") then do
+            
+            defaultLocale = java.util.Locale.getDefault()
+            
+            usable = teacher.isLanguageAvailable(defaultLocale)
+            
+            if usable == TextToSpeech.LANG_AVAILABLE | -
+                usable == TextToSpeech.LANG_COUNTRY_AVAILABLE | -
+                usable == TextToSpeech.LANG_COUNTRY_VAR_AVAILABLE then do
+                
+                teacher.setLanguage(defaultLocale)
+                
+                speech_enabled = 1
+                
+                welcome = this.getString(R.string.greeting)
+                
+            end
+            
+            else do
+                
+                speech_enabled = 0
+                
+                welcome = this.getString(R.string.err_lang)
+                
+            end
+            
+        end
+        
+        else do
+            
+            speech_enabled = 1
+            
+            welcome = this.getString(R.string.greeting)
+            
+        end
+        
+    end
+    
+    else do
+        
+        speech_enabled = 0
+        
+        welcome = this.getString(R.string.err_sound)
+        
+    end
+    
+    if speech_enabled = 0 then do
+        
+        if use_voice = 1 then do
+            
+            use_voice = speech_enabled
+            
+        end
+        
+    end
+    
+    if mBundle = 1 then do
+        
+        use_voice = speech_enabled
+        
+        transmit(welcome)
+        
+    end
+    
+    return
+    
+  method change_output()
+    
+    if speech_enabled = 1 then do
+        
+        if use_voice = speech_enabled then do
+            
+            use_voice = 0
+            
+        end
+        
+        else do
+            
+            use_voice = speech_enabled
+            
+        end
+        
+    end
+    
+    else do
+        
+        use_voice = speech_enabled
+        
+    end
+    
+  method transmit(message)
+    
+    if speech_enabled = 1 then do
+        
+        if use_voice = 1 then do
+            
+            teacher.speak(message, TextToSpeech.QUEUE_FLUSH, null)
+            
+        end
+        
+        else do
+            
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            
+        end
+        
+    end
+    
+    else do
+        
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        
+    end
+    
+  method onDestroy()
+    
+    super.onDestroy()
+    
+    if teacher \= null then do
+        
+        teacher.stop()
+        
+        teacher.shutdown()
+        
+    end
+    
+  method onSaveInstanceState(outState=Bundle)
+    
+    super.onSaveInstanceState(outState)
+    
+    outState.putString("use_voice", use_voice)
+    
+    outState.putString("book_number", book_number)
+    
+    outState.putString("dog_ear", dog_ear)
+    
+    outState.putString("attempts", attempts)
+    
+    outState.putString("success", success)
+    
+    outState.putString("test_format", test_format)
+    
+    outState.putString("reply_a", reply_a.getText())
+    
+    outState.putString("reply_b", reply_b.getText())
+    
+    outState.putString("reply_c", reply_c.getText())
+    
+    outState.putString("reply_d", reply_d.getText())
+    
+    outState.putString("user_entry", spelt.getText().toString())
+    
+  method onClick(v=View)
+    
+    select case v.getId()
+        
+        when R.id.reply_a then this.evaluate(reply_a.getText())
+        
+        when R.id.reply_b then this.evaluate(reply_b.getText())
+        
+        when R.id.reply_c then this.evaluate(reply_c.getText())
+        
+        when R.id.reply_d then this.evaluate(reply_d.getText())
+        
+        when R.id.check_spelt then this.evaluate(spelt.getText().toString())
+        
+        when R.id.subject then this.skim(book_number,1,1)
+        
+        when R.id.test_type then this.change_test()
+        
+        otherwise nop
+        
+    end
+    
+  method onCreateOptionsMenu(m=Menu) public returns boolean
+    
+    super.onCreateOptionsMenu(m)
+    
+    getMenuInflater().inflate(R.menu.menu, m)
+    
+    return 1
+    
+  method onOptionsItemSelected(i=MenuItem) public returns boolean
+    
+    select case i.getItemId()
+        
+        when R.id.help then do
+            
+            startActivity(Intent(this, Instructions.class))
+            
+            return 1
+            
+            end
+            
+        when R.id.report then do
+            
+            this.card_data()
+            
+            return 1
+            
+            end
+            
+        when R.id.speak then do
+            
+            this.change_output()
+            
+            return 1
+            
+            end
+            
+        when R.id.terms then do
+            
+            startActivity(Intent(this, -
+                Conditions.class).putExtra("Display", "Yes"))
+                
+            return 1
+            
+            end
+            
+        when R.id.publisher then do
+            
+            startActivity(Intent(Intent.ACTION_VIEW, -
+                Uri.parse("http://market.android.com/search?q=pub:Agrellum")))
+                
+            return 1
+            
+            end
+            
+        otherwise
+            return super.onOptionsItemSelected(i)
+    end
+    
+  method onItemClick(parent=AdapterView , v=View, page_number=int , id=long)
+    
+    this.dog_ear = page_number
+    
+    quiz(page_number)
+    
+  method change_test()
+    
+    switcher.showNext()
+    
+    if test_format = 1 then do
+        
+        test_type.setImageResource(R.drawable.ic_launcher)
+        
+        test_format = 0
+        
+    end
+    
+    else do
+        
+        test_type.setImageResource(R.drawable.ic_spell)
+        
+        test_format = 1
+        
+    end
+    
+  method skim(current=0, direction=1, display=1)
+    
+    if reply_a.getText() == "" then do
+        
+        result = this.lesson_planner.getCourses(current,direction)
+        
+        book_number = result["Number"]
+        
+        if display = 1 then do
+            
+            transmit(result["Title"])
+            
+        end
+        
+    end
+    
+    else do
+        
+        this.testing(0)
+        
+    end
+    
+  method testing(status = 0)
+    
+    if status = 1 then do
+        
+        subject.setImageResource(R.drawable.ic_cancel)
+        
+        reply_a.setVisibility(View.VISIBLE)
+        
+        reply_b.setVisibility(View.VISIBLE)
+        
+        reply_c.setVisibility(View.VISIBLE)
+        
+        reply_d.setVisibility(View.VISIBLE)
+        
+        spelt.setVisibility(View.VISIBLE)
+        
+        check_spelt.setVisibility(View.VISIBLE)
+        
+    end
+    
+    else do
+        
+        subject.setImageResource(R.drawable.ic_subject)
+        
+        reply_a.setText(R.string.empty)
+        
+        reply_b.setText(R.string.empty)
+        
+        reply_c.setText(R.string.empty)
+        
+        reply_d.setText(R.string.empty)
+        
+        reply_a.setVisibility(View.INVISIBLE)
+        
+        reply_b.setVisibility(View.INVISIBLE)
+        
+        reply_c.setVisibility(View.INVISIBLE)
+        
+        reply_d.setVisibility(View.INVISIBLE)
+        
+        spelt.setVisibility(View.INVISIBLE)
+        
+        check_spelt.setVisibility(View.INVISIBLE)
+        
+    end
+    
+  method quiz(page_number=int)
+    
+    correct_answer = this.lesson_planner.pages[page_number]
+    
+    rand = Random()
+    
+    multiple_choice = ["","","",""]
+    
+    range = this.lesson_planner.pages.length
+    
+    if range < 4 then do
+        
+        most = range
+        
+    end
+    
+    else do
+        
+        most = 4
+        
+    end
+    
+    multiple_choice[rand.nextInt(most)] = correct_answer
+    
+    answers = 0
+    
+    filled = 1
+    
+    answers[correct_answer] = filled
+    
+    loop while filled < most
+        
+        a_wrong_choice = this.lesson_planner.pages[rand.nextInt(range)]
+        
+        if answers.exists(a_wrong_choice) = 0 then do
+            
+            filled = filled + 1
+            
+            answers[a_wrong_choice] = filled
+            
+        end
+        
+    end
+    
+    answers[correct_answer] = null
+    
+    need = most - 1
+    
+    loop slot = 0 to need by 1
+        
+        if multiple_choice[slot] = "" then do
+            
+            loop available over answers
+                
+                multiple_choice[slot] = available
+                
+                answers[available] = null
+                
+                leave
+                
+            end
+            
+        end
+        
+    end
+    
+    reply_a.setText(multiple_choice[0])
+    
+    reply_b.setText(multiple_choice[1])
+    
+    reply_c.setText(multiple_choice[2])
+    
+    reply_d.setText(multiple_choice[3])
+    
+    spelt.setText(R.string.empty)
+    
+    this.testing(1)
+    
+    if test_format = 0 then do
+        
+        if use_voice = 1 then do
+            
+            transmit(correct_answer)
+            
+        end
+        
+        else do
+            
+            transmit(this.getString(R.string.question))
+            
+        end
+        
+    end
+    
+    else do
+        
+        transmit(this.getString(R.string.spell) || " " || -
+            this.lesson_planner.pages[page_number])
+        
+    end
+    
+  method evaluate(student_answer)
+    
+    if student_answer.length() > 0 then do
+        
+        correct_answer = this.lesson_planner.pages[this.dog_ear]
+        
+        if student_answer = correct_answer then do
+            
+            transmit(this.getString(R.string.reward))
+            
+            scored("A")
+            
+            this.testing(0)
+            
+        end
+        
+        else do
+            
+            if test_format = 1 then do
+                
+                transmit(this.getString(R.string.hint) || " " || correct_answer)
+                
+            end
+            
+            else do
+                
+                transmit(this.getString(R.string.wrong))
+                
+            end
+            
+            scored("F")
+            
+        end
+        
+    end
+    
+  method scored(result)
+    
+    if result = "F" then do
+        
+        attempts = attempts + 1
+        
+        this.record_grade(result)
+        
+    end
+    
+    if result = "A" then do
+        
+        attempts = attempts + 1
+        
+        success = success + 1
+        
+        this.record_grade(result)
+        
+    end
+    
+    grade = success / attempts * 100
+    
+    posted.setText(this.getString(R.string.grade) || " - " || grade.format(3,0))
+    
+  method record_grade(graded="F")
+    
+    /* Variable Naming -
+        o = old -
+        n = new -
+        u = updated -
+        g = grade -
+        q = question -
+        m = match -
+        s = spell or success -
+        a = attempts */
+    
+    if grade_book.contains("tally") then do
+        
+        og = grade_book.getString("tally", "")
+        
+        parse og moa ";" mos ";" soa ";" sos
+        
+        if graded = "F" then do
+            
+            if test_format = 0 then do
+                
+                moa = moa + 1
+                
+            end
+            
+            else do
+                
+                soa = soa + 1
+                
+            end
+            
+        end
+        
+        else do
+            
+            if test_format = 0 then do
+                
+                moa = moa + 1
+                
+                mos = mos + 1
+                
+            end
+            
+            else do
+                
+                soa = soa + 1
+                
+                sos = sos + 1
+                
+            end
+            
+        end
+        
+        ug = moa || ";" || mos || ";" || soa || ";" || sos
+        
+        my_editor = grade_book.edit()
+        
+        my_editor.putString("tally", ug)
+        
+        my_editor.commit()
+        
+    end
+    
+    else do
+        
+        ma = 0
+        
+        ms = 0
+        
+        sa = 0
+        
+        ss = 0
+        
+        if graded = "F" then do
+            
+            if test_format = 0 then do
+                
+                ma = ma + 1
+                
+            end
+            
+            else do
+                
+                sa = sa + 1
+                
+            end
+            
+        end
+        
+        else do
+            
+            if test_format = 0 then do
+                
+                ma = ma + 1
+                
+                ms = ms + 1
+                
+            end
+            
+            else do
+                
+                sa = sa + 1
+                
+                ss = ss + 1
+                
+            end
+            
+        end
+        
+        ng = ma || ";" || ms || ";" || sa || ";" || ss
+        
+        my_editor = grade_book.edit()
+        
+        my_editor.putString("tally", ng)
+        
+        my_editor.commit()
+        
+    end
+    
+    if book_number < 10 then do
+        
+        book_tag = "b0" || book_number
+        
+    end
+    
+    else do
+        
+        book_tag = "b" || book_number
+        
+    end
+    
+    if dog_ear < 10 then do
+        
+        page_tag = "_p0" || dog_ear
+        
+    end
+    
+    else do
+        
+        page_tag = "_p" || dog_ear
+        
+    end
+    
+    question = book_tag || page_tag
+    
+    if grade_book.contains(question) then do
+        
+        oqg = grade_book.getString(question, "")
+        
+        parse oqg qmoa ";" qmos ";" qsoa ";" qsos
+        
+        if graded = "F" then do
+            
+            if test_format = 0 then do
+                
+                qmoa = qmoa + 1
+                
+            end
+            
+            else do
+                
+                qsoa = qsoa + 1
+                
+            end
+            
+        end
+        
+        else do
+            
+            if test_format = 0 then do
+                
+                qmoa = qmoa + 1
+                
+                qmos = qmos + 1
+                
+            end
+            
+            else do
+                
+                qsoa = qsoa + 1
+                
+                qsos = qsos + 1
+                
+            end
+            
+        end
+        
+        uqg = qmoa || ";" || qmos || ";" || qsoa || ";" || qsos
+        
+        my_editor = grade_book.edit()
+        
+        my_editor.putString(question, uqg)
+        
+        my_editor.commit()
+        
+    end
+    
+    else do
+        
+        qma = 0
+        
+        qms = 0
+        
+        qsa = 0
+        
+        qss = 0
+        
+        if graded = "F" then do
+            
+            if test_format = 0 then do
+                
+                qma = qma + 1
+                
+            end
+            
+            else do
+                
+                qsa = qsa + 1
+                
+            end
+            
+        end
+        
+        else do
+            
+            if test_format = 0 then do
+                
+                qma = qma + 1
+                
+                qms = qms + 1
+                
+            end
+            
+            else do
+                
+                qsa = qsa + 1
+                
+                qss = qss + 1
+                
+            end
+            
+        end
+        
+        nqg = qma || ";" || qms || ";" || qsa || ";" || qss
+        
+        my_editor = grade_book.edit()
+        
+        my_editor.putString(question, nqg)
+        
+        my_editor.commit()
+        
+    end
+    
+  method empty_data()
+    
+    my_editor = this.grade_book.edit()
+    
+    my_editor.clear()
+    
+    my_editor.commit()
+    
+  method card_data()
+    
+    data = grade_book.getAll()
+    
+    sortedKeys= List ArrayList(data.keySet())
+    
+    Collections.sort(sortedKeys)
+    
+    it = Iterator sortedKeys.iterator()
+    
+    header = ""
+    
+    content = ""
+    
+    footer = ""
+    
+    page_content = ""
+    
+    
+    loop while it.hasNext()
+        
+        element = String it.next()
+        
+        if element \= "enrolled" then do
+            
+            if element = "tally" then do
+                
+                parse grade_book.getString(element, "") ma ";" ms ";" sa ";" ss
+                
+                if ms = 0 then match_grade = 0
+                    else match_grade = (ms / ma * 100).format(3,0)
+                    
+                if ss = 0 then spell_grade = 0
+                    else spell_grade = (ss / sa * 100).format(3,0)
+                    
+                if (ms + ss) = 0 then final_grade = 0
+                    else final_grade = ((ms + ss) / (ma + sa) * 100).format(3,0)
+                    
+                header = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD " -
+                  "HTML 4.0 Transitional//EN\">" -
+                  "<html>" -
+                  "<head>" -
+                  "<meta http-equiv=\"CONTENT-TYPE\" content=\"text/html; " -
+                  "charset=UTF-8\">" -
+                  "<title>" -
+                  this.getString(R.string.app_name) -
+                  "</title>" -
+                  "</head>" -
+                  "<body dir=\"ltr\">" -
+                  "<h1 align=\"center\">" -
+                  this.getString(R.string.rpt_card) -
+                  "</h1>" -
+                  "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"1\">" -
+                  "<col width=\"85*\">" -
+                  "<col width=\"85*\">" -
+                  "<col width=\"85*\">" -
+                  "<tbody>" -
+                  "<tr valign=\"top\">" -
+                  "<th width=\"33%\"><p align=\"center\">" -
+                  this.getString(R.string.grade) -
+                  "</p>" -
+                  "</th>" -
+                  "<th width=\"33%\"><p align=\"center\">" -
+                  this.getString(R.string.rpt_match) -
+                  "</p>" -
+                  "</th>" -
+                  "<th width=\"33%\"><p align=\"center\">" -
+                  this.getString(R.string.rpt_spell) -
+                  "</p>" -
+                  "</th>" -
+                  "</tr>" -
+                  "<tr valign=\"top\">" -
+                  "<td width=\"33%\"><p align=\"center\">" -
+                  final_grade -
+                  "</p>" -
+                  "</td>" -
+                  "<td width=\"33%\"><p align=\"center\">" -
+                  match_grade -
+                  "</p>" -
+                  "</td>" -
+                  "<td width=\"33%\"><p align=\"center\">" -
+                  spell_grade -
+                  "</p>" -
+                  "</td>" -
+                  "</tr>" -
+                  "<tr valign=\"top\">" -
+                  "<td width=\"33%\"><p align=\"center\">" -
+                  this.getString(R.string.rpt_words) -
+                  "</p>" -
+                  "</td>" -
+                  "<td width=\"33%\"><p align=\"center\"><br>" -
+                  "</p>" -
+                  "</td>" -
+                  "<td width=\"33%\"><p align=\"center\"><br>" -
+                  "</p>" -
+                  "</td>" -
+                  "</tr>"
+                  
+            end
+            
+            else do
+                
+                id = getResources().getIdentifier(element, -
+                    "string", getPackageName())
+                    
+                parse grade_book.getString(element, "") ma ";" ms ";" sa ";" ss
+                
+                row = "<tr valign=\"top\">" -
+                  "<td width=\"33%\"><p align=\"left\">" -
+                  this.getString(id) -
+                  "</p>" -
+                  "</td>" -
+                  "<td width=\"33%\"><p align=\"center\">" -
+                  ms || "/" || ma -
+                  "</p>" -
+                  "</td>" -
+                  "<td width=\"33%\"><p align=\"center\">" -
+                  ss || "/" || sa -
+                  "</p>" -
+                  "</td>" -
+                  "</tr>"
+                  
+                content = content || row
+                
+            end
+            
+        end
+        
+    end
+    
+    footer = "</tbody>" -
+        "</table>" -
+        "<p align=\"center\"><br>" -
+        "<br>" -
+        "</p>" -
+        "</body>" -
+        "</html>"
+        
+    if content = "" then page_content = "No Data"
+        else page_content = header || content || footer
+        
+    startActivity(Intent(this, Performance.class).putExtra("page_content", -
+        page_content.toString()))
+        
+class ImageAdapter extends android.widget.BaseAdapter
+    
+    properties public
+    
+    pages = Rexx[]
+    
+    properties private
+    
+    box_size = 144
+    
+    bkgd = int
+    
+    mContext = Context
+    
+    mRes = Resources
+    
+    book_tag = ""
+    
+  method ImageAdapter(c=Context, book_no=0)
+    
+    mContext = c
+    
+    mRes = mContext.getResources()
+    
+    metrics = DisplayMetrics DisplayMetrics()
+    
+    (android.view.WindowManager mContext.getSystemService( -
+        Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics)
+    
+    screen_dpi = metrics.densityDpi
+    
+    if screen_dpi > 319 then do
+        
+        box_size = 216
+        
+    end
+    
+    else do
+        
+        select case screen_dpi
+            
+            when android.util.DisplayMetrics.DENSITY_LOW then box_size = 108
+            
+            when android.util.DisplayMetrics.DENSITY_MEDIUM then box_size = 144
+            
+            when android.util.DisplayMetrics.DENSITY_HIGH then box_size = 216
+            
+            otherwise box_size = 144
+            
+        end
+        
+    end
+    
+    if pages == null then do
+        
+        getCourses(book_no, 0)
+        
+    end
+    
+    attr = TypedArray mContext.obtainStyledAttributes(R.styleable.Conparatum)
+    
+    bkgd = attr.getResourceId( -
+        R.styleable.Conparatum_android_galleryItemBackground, 0)
+    
+    attr.recycle()
+    
+  method getCount returns int
+    
+    return pages.length
+    
+  method getCourses(current=0, direction=1) returns Rexx
+    
+    library = 33
+    
+    current = current + direction
+    
+    if current > library-1 then do
+        
+        current = 0
+        
+    end
+    
+    if current < 0 then do
+        
+        current = library-1
+        
+    end
+    
+    if current < 10 then do
+        
+        book_tag = "b0" || current
+        
+    end
+    
+    else do
+        
+        book_tag = "b" || current
+        
+    end
+    
+    id = mRes.getIdentifier(Rexx(book_tag || "_nam").tostring(), -
+        "string", mContext.getPackageName())
+        
+    book_title = mRes.getString(id)
+    
+    id = mRes.getIdentifier(Rexx(book_tag || "_num").tostring(), -
+        "string", mContext.getPackageName())
+        
+    page_count = mRes.getString(id)
+    
+    pages = Rexx[page_count]
+    
+    most = page_count - 1
+    
+    loop slot = 0 to most by 1
+        
+        if slot < 10 then do
+            
+            page_tag = "_p0" || slot
+            
+        end
+        
+        else do
+            
+            page_tag = "_p" || slot
+            
+        end
+        
+        page_id = mRes.getIdentifier(Rexx(book_tag || page_tag).tostring(), -
+            "string", mContext.getPackageName())
+            
+        pages[slot] = mRes.getString(page_id)
+        
+    end slot
+    
+    notifyDataSetChanged()
+    
+    book = "Volume"
+    
+    book["Number"] = current
+    
+    book["Title"] = book_title
+    
+    return book
+    
+  method getItem(index=int) returns Object
+    
+    page_number = Integer(index)
+    
+    return page_number
+    
+  method getItemId(index=int) returns long
+    
+    page_number = Rexx(index).tolong()
+    
+    return page_number
+    
+  method getView(page_number=int, cView=View, parent=ViewGroup) returns View
+    
+    page = ImageView
+    
+    page = ImageView(mContext)
+    
+    if page_number < 10 then do
+        
+        page_tag = "_p0" || page_number
+        
+    end
+    
+    else do
+        
+        page_tag = "_p" || page_number
+        
+    end
+    
+    id = mRes.getIdentifier(Rexx(book_tag || page_tag).tostring(), -
+        "drawable", mContext.getPackageName())
+    
+    page.setImageDrawable(mRes.getDrawable(id))
+    
+    page.setLayoutParams(Gallery.LayoutParams(box_size, box_size))
+    
+    page.setScaleType(ImageView.ScaleType.CENTER_INSIDE)
+    
+    page.setBackgroundResource(bkgd)
+    
+    return page
+    
