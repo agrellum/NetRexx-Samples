@@ -1,62 +1,5 @@
---- oorexx-haiku-5.0.0/CMakeLists.txt.~1~	2019-01-18 12:00:55.045613056 +0000
-+++ oorexx-haiku-5.0.0/CMakeLists.txt	2019-01-18 19:19:30.486801408 +0000
-@@ -90,7 +90,7 @@
- 
- 
- # OOREXX_SHEBANG_PROGRAM default:
--set (OOREXX_SHEBANG_PROGRAM "/usr/bin/env rexx")
-+set (OOREXX_SHEBANG_PROGRAM "/bin/env rexx")
- 
- # if ORX_SHEBANG defined change default shebang accordingly
- if (ORX_SHEBANG)
-@@ -248,7 +248,7 @@
-    if( APPLE )
-        SET( CMAKE_INSTALL_RPATH "@executable_path/../lib")
-    else()
--       SET( CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
-+       SET( CMAKE_INSTALL_RPATH "/boot/home/config/non-packaged/lib")
-    endif()
- 
-    # add the automatically determined parts of the RPATH
-@@ -336,7 +336,7 @@
-             -DORX_SHARED_LIBRARY_EXT="${CMAKE_SHARED_LIBRARY_SUFFIX}"
-             -DORX_REXXPATH="${CMAKE_REXXPATH}"
-             -D${ORX_SYS_STR} -DOPSYS_${ORX_SYS_STR} -DHAVE_CONFIG_H)
--    set (ORX_SYSLIB_DL dl)
-+    set (ORX_SYSLIB_DL root)
-     set (ORX_SYSLIB_PTHREAD pthread)
- endif ()
- 
-@@ -399,7 +399,7 @@
-                            return 0;}"
-                           HAVE_PTHREAD_MUTEX_RECURSIVE)
-   # this requires -ldl on the link
--  set(CMAKE_REQUIRED_LIBRARIES dl)
-+  set(CMAKE_REQUIRED_LIBRARIES root)
-   check_c_source_compiles("#include <dlfcn.h>
-                            int main(int arg, char **argv) {
-                            Dl_info DlInfo;
-@@ -434,6 +434,9 @@
-                           HAVE_UNION_SEMUN)
-   check_include_file(unistd.h HAVE_UNISTD_H)
-   check_include_file(usersec.h HAVE_USERSEC_H)
-+  if (CMAKE_SYSTEM_NAME MATCHES "Haiku")
-+    set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} network)
-+  endif ()
-   if (CMAKE_SYSTEM_NAME MATCHES "(SunOS|Solaris)")
-     check_library_exists(socket getaddrinfo "" HAVE_LIBSOCKET)
-     if (HAVE_LIBSOCKET)
-@@ -1360,7 +1363,7 @@
- # gcc (at least on Linux) requires linking with -lcrypt
- # clang (at least on Darwin) doesn't have libcrypt
- if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
--    target_link_libraries(rxunixsys rexx rexxapi crypt ${CMAKE_REQUIRED_LIBRARIES})
-+    target_link_libraries(rxunixsys rexx rexxapi root ${CMAKE_REQUIRED_LIBRARIES})
- else ()
-     target_link_libraries(rxunixsys rexx rexxapi ${CMAKE_REQUIRED_LIBRARIES})
- endif ()
---- oorexx-haiku-5.0.0/common/platform/unix/SysFile.cpp.~1~	2019-01-13 11:34:33.017301504 +0000
-+++ oorexx-haiku-5.0.0/common/platform/unix/SysFile.cpp	2019-01-15 13:07:02.039059456 +0000
+--- oorexx-haiku-5.0.0/common/platform/unix/SysFile.cpp	2019-02-19 16:11:38.676069376 +0000
++++ oorexx-haiku-5.0.0/common/platform/unix/SysFile.cpp	2019-02-19 17:11:41.087556096 +0000
 @@ -62,7 +62,7 @@
  # include <sys/filio.h>
  #endif
@@ -66,8 +9,8 @@
  # define lseek64 lseek
  # define open64 open
  // avoid warning: '(f)stat64' is deprecated: first deprecated in macOS 10.6
---- oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.cpp.~1~	2019-01-13 11:34:33.020447232 +0000
-+++ oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.cpp	2019-01-15 13:19:52.417071104 +0000
+--- oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.cpp	2019-02-19 16:11:44.157286400 +0000
++++ oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.cpp	2019-02-19 17:11:41.089128960 +0000
 @@ -1108,7 +1108,7 @@
   *
   * @return        Array of file names.
@@ -86,8 +29,8 @@
      REXX_TYPED_ROUTINE(SysWordexp, SysWordexp),
  #endif    
  #ifdef HAVE_XATTR_H
---- oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.h.~1~	2019-01-13 11:34:33.020447232 +0000
-+++ oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.h	2019-01-15 13:16:25.698089472 +0000
+--- oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.h	2019-02-19 16:11:44.154664960 +0000
++++ oorexx-haiku-5.0.0/extensions/platform/unix/rxunixsys/rxunixsys.h	2019-02-19 17:11:41.090177536 +0000
 @@ -59,7 +59,7 @@
  #include <grp.h>
  #include <time.h>
@@ -108,118 +51,8 @@
  #ifdef __sun
  # define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
  #endif
---- oorexx-haiku-5.0.0/extensions/rexxutil/platform/unix/rexxutil.cpp.~1~	2019-01-13 11:34:14.033030144 +0000
-+++ oorexx-haiku-5.0.0/extensions/rexxutil/platform/unix/rexxutil.cpp	2019-01-15 13:57:47.580124672 +0000
-@@ -244,7 +244,7 @@
- };
- #endif
- 
--#if defined __APPLE__
-+#if defined __APPLE__ || __HAIKU__
- # define open64 open
- // avoid warning: '(l)stat64' is deprecated: first deprecated in macOS 10.6
- # define stat64 stat
-@@ -264,7 +264,7 @@
- #define  CH_EOF         0x1A           /* end of file marker         */
- #define  CH_CR          '\r'           /* carriage return character  */
- #define  CH_NL          '\n'           /* new line character         */
--#define  MAX            256            /* temporary buffer length    */
-+#define  BMAX            256            /* temporary buffer length    */
- #define  IBUF_LEN       4096           /* Input buffer length        */
- #define CURRENT_DIR_FIRST 0            /* search flag 'C'            */
- #define ENVIRONMENT_ONLY  1            /* search flag 'N'            */
-@@ -439,9 +439,9 @@
- typedef struct RxStemData {
-     SHVBLOCK shvb;                     /* Request block for RxVar    */
-     char ibuf[IBUF_LEN];               /* Input buffer               */
--    char varname[MAX];                 /* Buffer for the variable    */
-+    char varname[BMAX];                 /* Buffer for the variable    */
-                                        /* name                       */
--    char stemname[MAX];                /* Buffer for the variable    */
-+    char stemname[BMAX];                /* Buffer for the variable    */
-                                        /* name                       */
-     size_t stemlen;                    /* Length of stem.            */
-     size_t vlen;                       /* Length of variable value   */
-@@ -555,10 +555,10 @@
- }
- 
- /***********************************************************************/
--/* Function: strupr(string)                                            */
-+/* Function: struprx(string)                                            */
- /* Purpose:  Uppercas the given string                                 */
- /***********************************************************************/
--void strupr(char * string){
-+void struprx(char * string){
- 
-   for(;*string != '\0';string++){        /* while not at the end       */
-     *string = toupper(*string);
-@@ -1622,7 +1622,7 @@
-   ldp.count = 0;
-   strcpy(ldp.varname, args[2].strptr);
-   ldp.stemlen = args[2].strlength;
--  strupr(ldp.varname);                 /* uppercase the name         */
-+  struprx(ldp.varname);                 /* uppercase the name         */
-   if (ldp.varname[ldp.stemlen-1] != '.')
-     ldp.varname[ldp.stemlen++] = '.';
-   if (OpenFile(file, &filedata)) {     /* open the file              */
-@@ -1752,7 +1752,7 @@
-   if (ulRc)
-   {
-     char *temp = strdup(args[0].strptr);
--    strupr(temp);
-+    struprx(temp);
-     ulRc = SearchPath(SearchFlag, temp, args[1].strptr,
-                          (char *)buf, sizeof(buf));
-     free(temp);
-@@ -3767,10 +3767,10 @@
- 
-     int priority;                       /* Priority                           */
-                                         /* current priority                   */
--    priority = getpriority(PRIO_PROCESS, getpid());
-+    /* priority = getpriority(PRIO_PROCESS, getpid()); */
- 
-                                         /* Set new priority                   */
--    setpriority(PRIO_PROCESS, getpid(),-level);
-+    /* setpriority(PRIO_PROCESS, getpid(),-level); */
-     rc = 0;
-   }
- 
-@@ -5234,7 +5234,7 @@
-   else
-   if (!strcasecmp(args[0].strptr, "PPRIO"))
-   {
--    sprintf(retstr->strptr, "%d", getpriority(PRIO_PROCESS, 0));
-+    /* sprintf(retstr->strptr, "%d", getpriority(PRIO_PROCESS, 0)); */
-     retstr->strlength = strlen(retstr->strptr);
-     return VALID_ROUTINE;                /* no error on call           */
-   }
-@@ -5299,21 +5299,21 @@
-   else
-   if (!strcasecmp(args[0].strptr, "PMEM"))  /* Show max memory RSS used   */
-   {
--    sprintf(retstr->strptr, "Max_Memory_RSS: %ld", struResUse.ru_maxrss);
-+    /* sprintf(retstr->strptr, "Max_Memory_RSS: %ld", struResUse.ru_maxrss); */
-     retstr->strlength = strlen(retstr->strptr);
-     return VALID_ROUTINE;                /* no error on call           */
-   }
-   else
-   if (!strcasecmp(args[0].strptr, "PSWAPS")) /* Memory has been swapped   */
-   {
--    sprintf(retstr->strptr, "Memory_swaps: %ld", struResUse.ru_nswap);
-+    /* sprintf(retstr->strptr, "Memory_swaps: %ld", struResUse.ru_nswap); */
-     retstr->strlength = strlen(retstr->strptr);
-     return VALID_ROUTINE;                /* no error on call           */
-   }
-   else
-   if (!strcasecmp(args[0].strptr, "PRCVDSIG")) /* Process received signals*/
-   {
--    sprintf(retstr->strptr, "Received_signals: %ld", struResUse.ru_nsignals);
-+    /* sprintf(retstr->strptr, "Received_signals: %ld", struResUse.ru_nsignals); */
-     retstr->strlength = strlen(retstr->strptr);
-     return VALID_ROUTINE;                /* no error on call           */
-   }
---- oorexx-haiku-5.0.0/extensions/rxsock/rxsock.cpp.~1~	2019-01-13 11:34:33.034340864 +0000
-+++ oorexx-haiku-5.0.0/extensions/rxsock/rxsock.cpp	2019-01-15 14:07:56.652476416 +0000
+--- oorexx-haiku-5.0.0/extensions/rxsock/rxsock.cpp	2019-02-19 16:11:44.394264576 +0000
++++ oorexx-haiku-5.0.0/extensions/rxsock/rxsock.cpp	2019-02-19 17:11:41.091750400 +0000
 @@ -520,7 +520,7 @@
          case EPROTOTYPE      : pszErrno = "EPROTOTYPE";           break;
          case ENOPROTOOPT     : pszErrno = "ENOPROTOOPT";          break;
@@ -238,8 +71,8 @@
          case ETIMEDOUT       : pszErrno = "ETIMEDOUT";            break;
          case ECONNREFUSED    : pszErrno = "ECONNREFUSED";         break;
          case ELOOP           : pszErrno = "ELOOP";                break;
---- oorexx-haiku-5.0.0/extensions/rxsock/rxsockfn.cpp.~1~	2019-01-13 11:34:33.034603008 +0000
-+++ oorexx-haiku-5.0.0/extensions/rxsock/rxsockfn.cpp	2019-01-15 15:14:20.111673344 +0000
+--- oorexx-haiku-5.0.0/extensions/rxsock/rxsockfn.cpp	2019-02-19 16:11:44.396886016 +0000
++++ oorexx-haiku-5.0.0/extensions/rxsock/rxsockfn.cpp	2019-02-19 17:11:41.093585408 +0000
 @@ -358,7 +358,7 @@
      ia.s_addr = (*(uint32_t *)pHostEnt->h_addr);// in network byte order already
      return context->String(inet_ntoa(ia));
@@ -258,19 +91,8 @@
      // set the errno information
      cleanup(context);
      return context->String(inet_ntoa(ia));
---- oorexx-haiku-5.0.0/interpreter/platform/unix/SysFileSystem.cpp.~1~	2019-01-13 11:33:47.002359296 +0000
-+++ oorexx-haiku-5.0.0/interpreter/platform/unix/SysFileSystem.cpp	2019-01-15 14:30:56.450625536 +0000
-@@ -62,7 +62,7 @@
- #include "Utilities.hpp"
- #include "ActivityManager.hpp"
- 
--#if defined __APPLE__
-+#if defined __APPLE__ || __HAIKU__
- // avoid warning: '(f)stat64' is deprecated: first deprecated in macOS 10.6
- # define stat64 stat
- # define fstat64 fstat
---- oorexx-haiku-5.0.0/interpreter/platform/unix/PlatformDefinitions.h	2019-01-13 11:33:47.002097152 +0000
-+++ oorexx-haiku-5.0.0/interpreter/platform/unix/PlatformDefinitions.h.~1~	2019-01-15 14:28:51.007340032 +0000
+--- oorexx-haiku-5.0.0/interpreter/platform/unix/PlatformDefinitions.h	2019-02-19 16:11:25.112984064 +0000
++++ oorexx-haiku-5.0.0/interpreter/platform/unix/PlatformDefinitions.h	2019-02-19 17:11:41.094633984 +0000
 @@ -130,7 +130,7 @@
  /* appropriate for this file system.                                          */
  /******************************************************************************/
@@ -279,4 +101,150 @@
 +/* #define delimiter '/' */
  #define line_end "\n"
  #define line_end_size 1
+ 
+--- oorexx-haiku-5.0.0/interpreter/platform/unix/SysFileSystem.cpp	2019-02-19 16:11:25.041156608 +0000
++++ oorexx-haiku-5.0.0/interpreter/platform/unix/SysFileSystem.cpp	2019-02-19 17:11:41.096731136 +0000
+@@ -65,7 +65,7 @@
+ #include "ActivityManager.hpp"
+ #include "FileNameBuffer.hpp"
+ 
+-#if defined __APPLE__
++#if defined __APPLE__ || __HAIKU__
+ // avoid warning: '(f)stat64' is deprecated: first deprecated in macOS 10.6
+ #define stat64 stat
+ #define fstat64 fstat
+--- oorexx-haiku-5.0.0/interpreter/platform/unix/SysRexxUtil.cpp	2019-02-19 16:11:25.014155776 +0000
++++ oorexx-haiku-5.0.0/interpreter/platform/unix/SysRexxUtil.cpp	2019-02-19 17:11:41.099090432 +0000
+@@ -191,7 +191,7 @@
+ };
+ #endif
+ 
+-#if defined __APPLE__
++#if defined __APPLE__ || __HAIKU__
+ #define open64 open
+ // avoid warning: '(l)stat64' is deprecated: first deprecated in macOS 10.6
+ #define stat64 stat
+@@ -1607,19 +1607,19 @@
+     else if (!strcasecmp(selector, "PMEM"))  /* Show max memory RSS used   */
+     {
+         char buffer[100];
+-        snprintf(buffer, sizeof(buffer), "Max_Memory_RSS: %ld", struResUse.ru_maxrss);
++        /* snprintf(buffer, sizeof(buffer), "Max_Memory_RSS: %ld", struResUse.ru_maxrss); */
+         return context->NewStringFromAsciiz(buffer);
+     }
+     else if (!strcasecmp(selector, "PSWAPS")) /* Memory has been swapped   */
+     {
+         char buffer[100];
+-        snprintf(buffer, sizeof(buffer), "Memory_swaps: %ld", struResUse.ru_nswap);
++        /* snprintf(buffer, sizeof(buffer), "Memory_swaps: %ld", struResUse.ru_nswap); */
+         return context->NewStringFromAsciiz(buffer);
+     }
+     else if (!strcasecmp(selector, "PRCVDSIG")) /* Process received signals*/
+     {
+         char buffer[100];
+-        snprintf(buffer, sizeof(buffer), "Received_signals: %ld", struResUse.ru_nsignals);
++        /* snprintf(buffer, sizeof(buffer), "Received_signals: %ld", struResUse.ru_nsignals); */
+         return context->NewStringFromAsciiz(buffer);
+     }
+
+--- oorexx-haiku-5.0.0/CMakeLists.txt	2019-02-20 15:39:37.870580224 +0000
++++ oorexx-haiku-5.0.0/CMakeLists.txt	2019-02-20 20:54:56.099352576 +0000
+@@ -90,7 +90,7 @@
+ 
+ 
+ # OOREXX_SHEBANG_PROGRAM default:
+-set (OOREXX_SHEBANG_PROGRAM "/usr/bin/env rexx")
++set (OOREXX_SHEBANG_PROGRAM "/bin/env rexx")
+ 
+ # if ORX_SHEBANG defined change default shebang accordingly
+ if (ORX_SHEBANG)
+@@ -250,7 +250,7 @@
+    if( APPLE )
+        SET( CMAKE_INSTALL_RPATH "@executable_path/../lib")
+    else()
+-       SET( CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
++       SET( CMAKE_INSTALL_RPATH "/boot/home/config/non-packaged/lib")
+    endif()
+ 
+    # add the automatically determined parts of the RPATH
+@@ -283,20 +283,20 @@
+ 
+    set (INSTALL_EXECUTABLE_DIR ${CMAKE_INSTALL_PREFIX}/bin)
+    set (INSTALL_CLS_DIR ${INSTALL_EXECUTABLE_DIR})
+-   set (INSTALL_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+-   set (INSTALL_SAMPLES_DIR ${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME})
+-   set (INSTALL_MAN_DIR ${CMAKE_INSTALL_PREFIX}/share/man)
++   set (INSTALL_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/develop)
++   set (INSTALL_SAMPLES_DIR ${CMAKE_INSTALL_PREFIX}/data/${CMAKE_PROJECT_NAME})
++   set (INSTALL_MAN_DIR ${CMAKE_INSTALL_PREFIX}/documentation/man)
+ endif ()
+ 
+ # Set compiler and linker flags common to all build environments
+ # current trunk uses the C++ "override" keyword, which requires C++11
+-if (CMAKE_VERSION VERSION_LESS "3.1")
+-  if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+-  endif ()
+-else ()
+-  set (CMAKE_CXX_STANDARD 11)
+-endif ()
++#if (CMAKE_VERSION VERSION_LESS "3.1")
++#  if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
++#  endif ()
++#else ()
++#set (CMAKE_CXX_STANDARD 11)
++#endif ()
+ 
+ include_directories(${PROJECT_BINARY_DIR})
+ if (WIN32)
+@@ -340,7 +340,7 @@
+             -DORX_SHARED_LIBRARY_EXT="${CMAKE_SHARED_LIBRARY_SUFFIX}"
+             -DORX_REXXPATH="${CMAKE_REXXPATH}"
+             -D${ORX_SYS_STR} -DOPSYS_${ORX_SYS_STR} -DHAVE_CONFIG_H)
+-    set (ORX_SYSLIB_DL dl)
++    #set (ORX_SYSLIB_DL dl)
+     set (ORX_SYSLIB_PTHREAD pthread)
+ endif ()
+ 
+@@ -403,7 +403,7 @@
+                            return 0;}"
+                           HAVE_PTHREAD_MUTEX_RECURSIVE)
+   # this requires -ldl on the link
+-  set(CMAKE_REQUIRED_LIBRARIES dl)
++  #set(CMAKE_REQUIRED_LIBRARIES dl)
+   check_c_source_compiles("#include <dlfcn.h>
+                            int main(int arg, char **argv) {
+                            Dl_info DlInfo;
+@@ -440,6 +440,9 @@
+                           HAVE_UNION_SEMUN)
+   check_include_file(unistd.h HAVE_UNISTD_H)
+   check_include_file(usersec.h HAVE_USERSEC_H)
++  if (CMAKE_SYSTEM_NAME MATCHES "Haiku")
++    set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} network)
++  endif ()
+   if (CMAKE_SYSTEM_NAME MATCHES "(SunOS|Solaris)")
+     check_library_exists(socket getaddrinfo "" HAVE_LIBSOCKET)
+     if (HAVE_LIBSOCKET)
+@@ -1340,7 +1343,7 @@
+ # gcc (at least on Linux) requires linking with -lcrypt
+ # clang (at least on Darwin) doesn't have libcrypt
+ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+-    target_link_libraries(rxunixsys rexx rexxapi crypt ${CMAKE_REQUIRED_LIBRARIES})
++    target_link_libraries(rxunixsys rexx rexxapi ${CMAKE_REQUIRED_LIBRARIES})
+ else ()
+     target_link_libraries(rxunixsys rexx rexxapi ${CMAKE_REQUIRED_LIBRARIES})
+ endif ()
+@@ -1797,9 +1800,9 @@
+    add_manpage (rxqueue 1)
+    add_manpage (rxsubcom 1)
+ 
+-   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${build_platform_dir}/rexx.sh DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME} PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ)
+-   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${build_platform_dir}/rexx.csh DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME} PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ)
+-   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${build_samples_dir}/readme DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME})
++   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${build_platform_dir}/rexx.sh DESTINATION ${CMAKE_INSTALL_PREFIX}/data/${CMAKE_PROJECT_NAME} PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ)
++   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${build_platform_dir}/rexx.csh DESTINATION ${CMAKE_INSTALL_PREFIX}/data/${CMAKE_PROJECT_NAME} PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ)
++   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${build_samples_dir}/readme DESTINATION ${CMAKE_INSTALL_PREFIX}/data/${CMAKE_PROJECT_NAME})
+ endif ()
+ 
  
