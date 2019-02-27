@@ -1,0 +1,390 @@
+Debug information for team /boot/system/bin/rexx (14932):
+CPU(s): 2x AMD Athlon II
+Memory: 3.87 GiB total, 983.62 MiB used
+Haiku revision: hrev52939 Feb 26 2019 14:25:36 (x86_64)
+
+Active Threads:
+	thread 14932: rexx (main)
+	thread 14934: pthread func 
+	thread 14937: pthread func 
+	thread 14938: pthread func 
+	thread 14945: team 14932 debug task 
+	thread 14935: pthread func 
+		state: Exception (Segment violation)
+
+		Frame		IP			Function Name
+		-----------------------------------------------
+		0x7ff1d5081880	0x1f065187a50	NativeCode::getSecurityManager(void) + 0 (/sources/oorexx-5.0.0/interpreter/execution/NativeCode.cpp:-1)
+			Disassembly:
+				NativeCode::getSecurityManager(void):
+				0x000001f065187a50:         488b4720  mov 0x20(%rdi), %rax <--
+
+			Frame memory:
+				[0x7ff1d5081878]  d[.e....   64 5b 18 65 f0 01 00 00
+			Variables:
+			this: 0 {
+				packageName: Bad address
+				name: Bad address
+			}
+
+		0x7ff1d5081a00	0x1f065185b5f	NativeActivation::run(MethodClass*, NativeMethod*, RexxObject*, RexxString*, RexxObject**, size_t, ProtectedObject&) + 0x7f (/sources/oorexx-5.0.0/interpreter/execution/NativeActivation.cpp:-1)
+			Variables:
+			this: 0x1912f4ad4e0 {
+				MaxNativeArguments: Invalid Argument
+				activity: 0x1912f4acee0
+				code: 0
+				receiver: 0
+				messageName: 0
+				activation: 0
+				argCount: 0
+				argList: 0
+				argArray: 0
+				firstSavedObject: 0
+				saveList: 0
+				result: 0
+				activationType: METHOD_ACTIVATION
+				conditionName: 0x1912c5866e0
+				conditionObj: 0x19146165dc0
+				securityManager: 0
+				objectVariables: 0
+				stackBase: true
+				trapErrors: false
+				trapConditions: false
+				captureConditions: false
+				variablePoolEnabled: false
+			}
+			_method: 0 {
+				classInstance: Invalid Argument
+				scope: Bad address
+			}
+			_code: 0 {
+				entry: Bad address
+			}
+			_receiver: 0 {
+				objectVariables: Bad address
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			_msgname: 0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: Bad address
+				length: Bad address
+				numberStringValue: Bad address
+				stringData: Bad address
+			}
+			_arglist: 0 {
+				*_arglist: Invalid Argument
+			}
+			_argcount: 0
+			resultObj: 0x7ff1d5081a10 {
+				protectedObject: 0
+			}
+			frame {
+				activation: 0x1912f4ad4e0
+			}
+			arguments: Unavailable {
+				arguments[0]
+				arguments[1]
+				arguments[2]
+				arguments[3]
+				arguments[4]
+				arguments[5]
+				arguments[6]
+				arguments[7]
+				arguments[8]
+				arguments[9]
+			}
+			context {
+				threadContext
+				context: 0x1f06519a39e
+			}
+			methp: No such file or directory
+			activityLevel: No such file or directory
+
+		0x7ff1d5081a60	0x1f065185dbf	NativeActivation::dispatch(void) + 0x4f (/sources/oorexx-5.0.0/interpreter/execution/NativeActivation.cpp:-1)
+			Variables:
+			this: 0x1912f4ad4e0 {
+				MaxNativeArguments: Invalid Argument
+				activity: 0x1912f4acee0
+				code: 0
+				receiver: 0
+				messageName: 0
+				activation: 0
+				argCount: 0
+				argList: 0
+				argArray: 0
+				firstSavedObject: 0
+				saveList: 0
+				result: 0
+				activationType: METHOD_ACTIVATION
+				conditionName: 0x1912c5866e0
+				conditionObj: 0x19146165dc0
+				securityManager: 0
+				objectVariables: 0
+				stackBase: true
+				trapErrors: false
+				trapConditions: false
+				captureConditions: false
+				variablePoolEnabled: false
+			}
+			r {
+				protectedObject: 0
+			}
+
+		0x7ff1d5081af0	0x1f0651a5e96	Activity::runThread(void) + 0x146 (/sources/oorexx-5.0.0/interpreter/concurrency/Activity.cpp:-1)
+			Variables:
+			this: 0x1912f4acee0 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0
+				threadContext
+				oldActivity: 0
+				conditionobj: 0
+				requiresTable: 0x1912f4ad140
+				dispatchMessage: 0
+				activations: 0x1912f4ad060
+				activationStackSize: 20
+				stackFrameDepth: 1
+				currentRexxFrame: 0
+				topStackFrame: 0x1912f4ad4e0
+				currentExit: 0
+				waitingObject: 0
+				numericSettings: 0x1f065464bc0
+				stackcheck: true
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: false
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: true
+				nestedCount: 1
+				attachCount: 0
+				newThreadAttached: false
+				stackBase: Bad address
+				clauseExitUsed: false
+				randomSeed: 7236920236406039821
+				protectedObjects: 0x7ff1d5081a10
+				activationFrames: 0x7ff1d5081880
+				nestedActivity: 0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			firstDispatch: false
+			base: 0
+
+		0x7ff1d5081b00	0x1f0651d9584	threadFnc(void*) + 0x4 (/sources/oorexx-5.0.0/interpreter/platform/unix/SysActivity.cpp:-1)
+			Variables:
+			args: 0 {
+				*args: Unavailable
+			}
+
+		0x7ff1d5081b20	0xde0b251975	pthread_thread_entry(void*, void*) + 0x15 
+		00000000	0x7ff53b050260	commpage_thread_exit + 0 
+
+		Registers:
+			  rip:	0x000001f065187a50
+			  rsp:	0x00007ff1d5081878
+			  rbp:	0x00007ff1d50819f0
+			  rax:	0x0000000000000000
+			  rbx:	0x000001912f4ad4e0
+			  rcx:	0x0000000000000000
+			  rdx:	0x00007ff1d5081880
+			  rsi:	0x0000000000000000
+			  rdi:	0x0000000000000000
+			   r8:	0x0000000000000000
+			   r9:	0x0000000000000000
+			  r10:	0x0000000000000000
+			  r11:	0x0000000000003246
+			  r12:	0x00007ff1d5081a10
+			  r13:	0x000001f065439570
+			  r14:	0x0000000000000000
+			  r15:	0x0000000000000000
+			   cs:	0x002b
+			   ds:	0x0000
+			   es:	0x0000
+			   fs:	0x0000
+			   gs:	0x0000
+			   ss:	0x0023
+			  st0:	0
+			  st1:	nan
+			  st2:	nan
+			  st3:	nan
+			  st4:	0
+			  st5:	0
+			  st6:	0
+			  st7:	0
+			  mm0:	{0, 0, 0, 0}
+			  mm1:	{0xe21b, 0, 0, 0}
+			  mm2:	{0xf000, 0xfee0, 0, 0}
+			  mm3:	{0x7b69, 0, 0, 0}
+			  mm4:	{0, 0, 0, 0}
+			  mm5:	{0, 0, 0, 0}
+			  mm6:	{0, 0, 0, 0}
+			  mm7:	{0, 0, 0, 0}
+			 xmm0:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm1:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm2:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm3:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm4:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm5:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm6:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm7:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm8:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm9:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm10:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm11:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm12:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm13:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm14:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm15:	{0, 0, 0, 0, 0, 0, 0, 0}
+
+Loaded Images:
+	ID		Text Base	Text End	Data Base	Data End	Type	Name
+	--------------------------------------------------------------------------------
+	21180	0x3e00059000	0x3e0006e000	0x3e0026d000	0x3e0026e000	lib    	/boot/system/lib/libgcc_s.so.1
+	21187	0x4a1f582000	0x4a1f58e000	0x4a1f78d000	0x4a1f78f000	lib    	/boot/system/lib/libicuio.so.57.1
+	21178	0x56793c3000	0x5679404000	0x5679603000	0x567960c000	lib    	/boot/system/lib/libnetwork.so
+	21183	0x7ef7b7b000	0x7ef7b80000	0x7ef7d7f000	0x7ef7d80000	lib    	/boot/system/lib/librxregexp.so.5.0.0
+	21182	0x80230be000	0x80230c5000	0x80232c5000	0x80232c6000	lib    	/boot/system/lib/libbsd.so
+	21194	0xc074cea000	0xc074cf3000	0xc074ef2000	0xc074ef4000	lib    	/boot/system/lib/librxunixsys.so.5.0.0
+	21184	0xcbda55f000	0xcbda570000	0xcbda770000	0xcbda771000	lib    	/boot/system/lib/libroot-addon-icu.so
+	21181	0xde0b200000	0xde0b35f000	0xde0b55f000	0xde0b5b2000	lib    	/boot/system/lib/libroot.so
+	21195	0xedd0246000	0xedd024f000	0xedd044e000	0xedd044f000	lib    	/boot/system/lib/librxsock.so.5.0.0
+	21193	0xff1231b000	0xff1231f000	0xff1251f000	0xff12539000	lib    	/boot/system/lib/libhostemu.so.5.0.0
+	21190	0x10408426000	0x10408455000	0x10408655000	0x10408689000	lib    	/boot/system/lib/libicutu.so.57.1
+	21186	0x11ddd33c000	0x11ddd5b9000	0x11ddd7b8000	0x11ddd7cd000	lib    	/boot/system/lib/libicui18n.so.57.1
+	21191	0x13c87799000	0x13c87931000	0x13c87b30000	0x13c87b45000	lib    	/boot/system/lib/libicuuc.so.57.1
+	21189	0x13f7cd17000	0x13f7cd22000	0x13f7cf22000	0x13f7cf23000	lib    	/boot/system/lib/libiculx.so.57.1
+	21175	0x1435fc20000	0x1435fc22000	0x1435fe21000	0x1435fe22000	app    	/boot/system/bin/rexx
+	21192	0x15de4cc5000	0x15de4cc9000	0x15de4ec9000	0x15de4eca000	lib    	/boot/system/lib/librxmath.so.5.0.0
+	21188	0x16220e5d000	0x16220eb2000	0x162210b2000	0x162210b5000	lib    	/boot/system/lib/libicule.so.57.1
+	21185	0x1902f971000	0x190311ef000	0x190313ee000	0x190313ef000	lib    	/boot/system/lib/libicudata.so.57.1
+	21179	0x1c425fa0000	0x1c426108000	0x1c426308000	0x1c42631c000	lib    	/boot/system/lib/libstdc++.so.6.0.24
+	21177	0x1dfd53f5000	0x1dfd540d000	0x1dfd560d000	0x1dfd560e000	lib    	/boot/system/lib/librexxapi.so.5.0.0
+	21176	0x1f065031000	0x1f06523a000	0x1f065439000	0x1f065465000	lib    	/boot/system/lib/librexx.so.5.0.0
+	21174	0x1f212670000	0x1f212692000	0x1f212891000	0x1f212893000	lib    	/boot/system/runtime_loader
+	21173	0x7ff53b050000	0x7ff53b058000	0x00000000	0x00000000	system 	commpage
+
+Areas:
+	ID		Base		End			Size (KiB)	Protection	Locking			Name
+	--------------------------------------------------------------------------------
+	84495	0x1394ab1000	0x1394ac1000	        64	rw-        	full          	rld heap
+	84494	0x22b329c000	0x22b32ac000	        64	rw-        	full          	rld heap
+	84493	0x26589ee000	0x26589f6000	        32	rw-        	full          	rld heap
+	84472	0x32298c7000	0x32298c8000	         4	rw-S       	full          	_rld_debug_
+	84486	0x3e00059000	0x3e0006e000	        84	r-x        	full          	libgcc_s.so.1_seg0ro
+	84487	0x3e0026d000	0x3e0026e000	         4	rw-        	full          	libgcc_s.so.1_seg1rw
+	84507	0x4a1f582000	0x4a1f58e000	        48	r-x        	full          	libicuio.so.57.1_seg0ro
+	84508	0x4a1f78d000	0x4a1f78f000	         8	rw-        	full          	libicuio.so.57.1_seg1rw
+	84471	0x4b33961000	0x4b33971000	        64	rw-        	full          	rld heap
+	84480	0x56793c3000	0x5679404000	       260	r-x        	full          	libnetwork.so_seg0ro
+	84481	0x5679603000	0x5679606000	        12	rw-        	full          	libnetwork.so_seg1rw
+	84482	0x5679606000	0x567960c000	        24	rw-        	full          	libnetwork.so_seg2rw
+	84499	0x7ef7b7b000	0x7ef7b80000	        20	r-x        	full          	librxregexp.so.5.0.0_seg0ro
+	84500	0x7ef7d7f000	0x7ef7d80000	         4	rw-        	full          	librxregexp.so.5.0.0_seg1rw
+	84491	0x80230be000	0x80230c5000	        28	r-x        	full          	libbsd.so_seg0ro
+	84492	0x80232c5000	0x80232c6000	         4	rw-        	full          	libbsd.so_seg1rw
+	84527	0xc074cea000	0xc074cf3000	        36	r-x        	full          	librxunixsys.so.5.0.0_seg0ro
+	84528	0xc074ef2000	0xc074ef4000	         8	rw-        	full          	librxunixsys.so.5.0.0_seg1rw
+	84501	0xcbda55f000	0xcbda570000	        68	r-x        	full          	libroot-addon-icu.so_seg0ro
+	84502	0xcbda770000	0xcbda771000	         4	rw-        	full          	libroot-addon-icu.so_seg1rw
+	84488	0xde0b200000	0xde0b35f000	      1404	r-x        	full          	libroot.so_seg0ro
+	84489	0xde0b55f000	0xde0b56d000	        56	rw-        	full          	libroot.so_seg1rw
+	84490	0xde0b56d000	0xde0b5b2000	       276	rw-        	full          	libroot.so_seg2rw
+	84529	0xedd0246000	0xedd024f000	        36	r-x        	full          	librxsock.so.5.0.0_seg0ro
+	84530	0xedd044e000	0xedd044f000	         4	rw-        	full          	librxsock.so.5.0.0_seg1rw
+	84524	0xff1231b000	0xff1231f000	        16	r-x        	full          	libhostemu.so.5.0.0_seg0ro
+	84525	0xff1251f000	0xff12520000	         4	rw-        	full          	libhostemu.so.5.0.0_seg1rw
+	84526	0xff12520000	0xff12539000	       100	rw-        	full          	libhostemu.so.5.0.0_seg2rw
+	84513	0x10408426000	0x10408455000	       188	r-x        	full          	libicutu.so.57.1_seg0ro
+	84514	0x10408655000	0x10408657000	         8	rw-        	full          	libicutu.so.57.1_seg1rw
+	84515	0x10408657000	0x10408689000	       200	rw-        	full          	libicutu.so.57.1_seg2rw
+	84505	0x11ddd33c000	0x11ddd5b9000	      2548	r-x        	full          	libicui18n.so.57.1_seg0ro
+	84506	0x11ddd7b8000	0x11ddd7cd000	        84	rw-        	full          	libicui18n.so.57.1_seg1rw
+	84516	0x13c87799000	0x13c87931000	      1632	r-x        	full          	libicuuc.so.57.1_seg0ro
+	84517	0x13c87b30000	0x13c87b45000	        84	rw-        	full          	libicuuc.so.57.1_seg1rw
+	84511	0x13f7cd17000	0x13f7cd22000	        44	r-x        	full          	libiculx.so.57.1_seg0ro
+	84512	0x13f7cf22000	0x13f7cf23000	         4	rw-        	full          	libiculx.so.57.1_seg1rw
+	84473	0x1435fc20000	0x1435fc22000	         8	r-x        	full          	rexx_seg0ro
+	84474	0x1435fe21000	0x1435fe22000	         4	rw-        	full          	rexx_seg1rw
+	84522	0x15de4cc5000	0x15de4cc9000	        16	r-x        	full          	librxmath.so.5.0.0_seg0ro
+	84523	0x15de4ec9000	0x15de4eca000	         4	rw-        	full          	librxmath.so.5.0.0_seg1rw
+	84509	0x16220e5d000	0x16220eb2000	       340	r-x        	full          	libicule.so.57.1_seg0ro
+	84510	0x162210b2000	0x162210b5000	        12	rw-        	full          	libicule.so.57.1_seg1rw
+	84503	0x1902f971000	0x190311ef000	     25080	r-x        	full          	libicudata.so.57.1_seg0ro
+	84504	0x190313ee000	0x190313ef000	         4	rw-        	full          	libicudata.so.57.1_seg1rw
+	84496	0x1912c27f000	0x1914faff000	    582144	rw-        	full          	heap
+	84483	0x1c425fa0000	0x1c426108000	      1440	r-x        	full          	libstdc++.so.6.0.24_seg0ro
+	84484	0x1c426308000	0x1c426314000	        48	rw-        	full          	libstdc++.so.6.0.24_seg1rw
+	84485	0x1c426314000	0x1c42631c000	        32	rw-        	full          	libstdc++.so.6.0.24_seg2rw
+	84478	0x1dfd53f5000	0x1dfd540d000	        96	r-x        	full          	librexxapi.so.5.0.0_seg0ro
+	84479	0x1dfd560d000	0x1dfd560e000	         4	rw-        	full          	librexxapi.so.5.0.0_seg1rw
+	84475	0x1f065031000	0x1f06523a000	      2084	r-x        	full          	librexx.so.5.0.0_seg0ro
+	84476	0x1f065439000	0x1f06545e000	       148	rw-        	full          	librexx.so.5.0.0_seg1rw
+	84477	0x1f06545e000	0x1f065465000	        28	rw-        	full          	librexx.so.5.0.0_seg2rw
+	84469	0x1f212670000	0x1f212692000	       136	r-x        	full          	runtime_loader_seg0ro
+	84470	0x1f212891000	0x1f212893000	         8	rw-        	full          	runtime_loader_seg1rw
+	84533	0x7f2fb60b6000	0x7f2fb613b000	       532	rw-s       	full          	pthread func_14937_stack
+	84519	0x7f5399a29000	0x7f5399aae000	       532	rw-s       	full          	pthread func_14934_stack
+	84467	0x7f68a55d6000	0x7f68a65dc000	     16408	rw-s       	full          	rexx_14932_stack
+	84466	0x7f953fdb9000	0x7f953fdbd000	        16	rw-        	full          	user area
+	84535	0x7fea0876c000	0x7fea087f1000	       532	rw-s       	full          	pthread func_14938_stack
+	84521	0x7ff1d4ffe000	0x7ff1d5083000	       532	rw-s       	full          	pthread func_14935_stack
+	84468	0x7ff53b050000	0x7ff53b058000	        32	r-xS       	full          	commpage
+
+Protection Flags: r - read, w - write, x - execute, s - stack, o - overcommit, c - cloneable, S - shared, k - kernel
+
+Semaphores:
+	ID		Count	Last Holder	Name
+	------------------------------------------------------------
