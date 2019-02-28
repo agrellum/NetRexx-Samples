@@ -1,0 +1,3546 @@
+Debug information for team /boot/system/bin/rexx (826):
+CPU(s): 2x AMD Athlon II
+Memory: 3.87 GiB total, 496.04 MiB used
+Haiku revision: hrev52939 Feb 26 2019 14:25:36 (x86_64)
+
+Active Threads:
+	thread 828: pthread func 
+	thread 829: pthread func 
+	thread 830: team 826 debug task 
+	thread 826: rexx (main)
+		state: Exception (Segment violation)
+
+		Frame		IP			Function Name
+		-----------------------------------------------
+		0x7fd36ef22070	0x95d51071bc	MemoryObject::mark(RexxInternalObject*) + 0x2c (/sources/oorexx-5.0.0/interpreter/memory/RexxMemory.cpp:-1)
+			Disassembly:
+				MemoryObject::mark(RexxInternalObject*):
+				0x00000095d5107190:               55  push %rbp
+				0x00000095d5107191:           4889e5  mov %rsp, %rbp
+				0x00000095d5107194:             4154  push %r12
+				0x00000095d5107196:               53  push %rbx
+				0x00000095d5107197:           4889fb  mov %rdi, %rbx
+				0x00000095d510719a:         4883ec10  sub $0x10, %rsp
+				0x00000095d510719e:         0fb74610  movzx 0x10(%rsi), %eax
+				0x00000095d51071a2:         488b5720  mov 0x20(%rdi), %rdx
+				0x00000095d51071a6:           83e0fc  and $0xfffffffc, %eax
+				0x00000095d51071a9:             09d0  or %edx, %eax
+				0x00000095d51071ab:             a820  test $0x20, %al
+				0x00000095d51071ad:         66894610  mov %ax, 0x10(%rsi)
+				0x00000095d51071b1:             742d  jz 0xd51071e0
+				0x00000095d51071b3:         4c8b6618  mov 0x18(%rsi), %r12
+				0x00000095d51071b7:           4d85e4  test %r12, %r12
+				0x00000095d51071ba:             7412  jz 0xd51071ce
+				0x00000095d51071bc:     410fb74c2410  movzx 0x10(%r12), %ecx <--
+
+			Frame memory:
+				[0x7fd36ef22040]  ` .n....LN......   60 20 f2 6e d3 7f 00 00 4c 4e 08 d5 95 00 00 00
+				[0x7fd36ef22050]  p..E....@.<.....   70 e3 d0 45 bb 00 00 00 40 e9 3c d5 95 00 00 00
+				[0x7fd36ef22060]  . .n.....r......   a0 20 f2 6e d3 7f 00 00 f5 72 10 d5 95 00 00 00
+			Variables:
+			this: 0x95d53ce940 {
+				virtualFunctionTable: Invalid Argument
+				exportedMethods: Invalid Argument
+				markWord: 1
+				protectedObjects: 0
+				environment: 0xbb425c07e0
+				commonRetrievers: 0xbb425c1570
+				system: 0xbb425c0820
+				rexxPackage: 0xbb425c13f0
+				liveStack: 0xbb423afe20
+				saveStack: 0xbb427d0840
+				markingObjects: true
+				old2new: 0xbb427d0810
+				uninitTable: 0xbb427cfe00
+				pendingUninits: 0
+				processingUninits: false
+				weakReferenceList: 0xbb47762c90
+				currentMarkHandler: 0x7fd36ef22d20
+				imageStats: 0
+				allocations: 166324
+				collections: 24
+				restoredImage: àU:Õ•
+				globalStrings: 0
+				globalReferences: 0xbb427d01a0
+			}
+			markObject: 0xbb480ae890 {
+				behaviour: 0x80
+			}
+			liveMark: 0
+
+		0x7fd36ef220b0	0x95d51072f2	MemoryObject::markObjectsMain(RexxInternalObject*) + 0x92 (/sources/oorexx-5.0.0/interpreter/memory/RexxMemory.cpp:-1)
+			Variables:
+			this: 0x95d53ce940 {
+				virtualFunctionTable: Invalid Argument
+				exportedMethods: Invalid Argument
+				markWord: 1
+				protectedObjects: 0
+				environment: 0xbb425c07e0
+				commonRetrievers: 0xbb425c1570
+				system: 0xbb425c0820
+				rexxPackage: 0xbb425c13f0
+				liveStack: 0xbb423afe20
+				saveStack: 0xbb427d0840
+				markingObjects: true
+				old2new: 0xbb427d0810
+				uninitTable: 0xbb427cfe00
+				pendingUninits: 0
+				processingUninits: false
+				weakReferenceList: 0xbb47762c90
+				currentMarkHandler: 0x7fd36ef22d20
+				imageStats: 0
+				allocations: 166324
+				collections: 24
+				restoredImage: àU:Õ•
+				globalStrings: 0
+				globalReferences: 0xbb427d01a0
+			}
+			liveMark: No such file or directory
+			markObject: 0xbb45d0e370 {
+				behaviour: 0xbb42ef51f0
+			}
+
+		0x7fd36ef220d0	0x95d510738f	MemoryObject::markObjects(void) + 0xf (/sources/oorexx-5.0.0/interpreter/memory/RexxMemory.cpp:-1)
+			Variables:
+			this: 0x95d53ce940 {
+				virtualFunctionTable: Invalid Argument
+				exportedMethods: Invalid Argument
+				markWord: 1
+				protectedObjects: 0
+				environment: 0xbb425c07e0
+				commonRetrievers: 0xbb425c1570
+				system: 0xbb425c0820
+				rexxPackage: 0xbb425c13f0
+				liveStack: 0xbb423afe20
+				saveStack: 0xbb427d0840
+				markingObjects: true
+				old2new: 0xbb427d0810
+				uninitTable: 0xbb427cfe00
+				pendingUninits: 0
+				processingUninits: false
+				weakReferenceList: 0xbb47762c90
+				currentMarkHandler: 0x7fd36ef22d20
+				imageStats: 0
+				allocations: 166324
+				collections: 24
+				restoredImage: àU:Õ•
+				globalStrings: 0
+				globalReferences: 0xbb427d01a0
+			}
+
+		0x7fd36ef220f0	0x95d51073e4	MemoryObject::collect(void) + 0x24 (/sources/oorexx-5.0.0/interpreter/memory/RexxMemory.cpp:-1)
+			Variables:
+			this: 0x95d53ce940 {
+				virtualFunctionTable: Invalid Argument
+				exportedMethods: Invalid Argument
+				markWord: 1
+				protectedObjects: 0
+				environment: 0xbb425c07e0
+				commonRetrievers: 0xbb425c1570
+				system: 0xbb425c0820
+				rexxPackage: 0xbb425c13f0
+				liveStack: 0xbb423afe20
+				saveStack: 0xbb427d0840
+				markingObjects: true
+				old2new: 0xbb427d0810
+				uninitTable: 0xbb427cfe00
+				pendingUninits: 0
+				processingUninits: false
+				weakReferenceList: 0xbb47762c90
+				currentMarkHandler: 0x7fd36ef22d20
+				imageStats: 0
+				allocations: 166324
+				collections: 24
+				restoredImage: àU:Õ•
+				globalStrings: 0
+				globalReferences: 0xbb427d01a0
+			}
+
+		0x7fd36ef22120	0x95d50fb995	NormalSegmentSet::handleAllocationFailure(size_t) + 0x15 (/sources/oorexx-5.0.0/interpreter/memory/MemorySegment.cpp:-1)
+			Variables:
+			this: 0x95d53cea98 {
+				FirstDeadPool: Invalid Argument
+				LargestSubpool: Invalid Argument
+				LastDeadPool: Invalid Argument
+				DeadPools: Invalid Argument
+				NormalMemoryExpansionThreshold: Invalid Argument
+				RecoverSegmentSize: Invalid Argument
+				InitialNormalSegmentSpace: Invalid Argument
+				subpools: Unavailable
+				lastUsedSubpool: Unavailable
+				recoverSegment: 0xbb4231ca80
+			}
+			allocationLength: 804367558800
+
+		0x7fd36ef22160	0x95d5106c39	MemoryObject::newObject(size_t, size_t) + 0x119 (/sources/oorexx-5.0.0/interpreter/memory/RexxMemory.cpp:-1)
+			Variables:
+			this: 0x95d53ce940 {
+				virtualFunctionTable: Invalid Argument
+				exportedMethods: Invalid Argument
+				markWord: 1
+				protectedObjects: 0
+				environment: 0xbb425c07e0
+				commonRetrievers: 0xbb425c1570
+				system: 0xbb425c0820
+				rexxPackage: 0xbb425c13f0
+				liveStack: 0xbb423afe20
+				saveStack: 0xbb427d0840
+				markingObjects: true
+				old2new: 0xbb427d0810
+				uninitTable: 0xbb427cfe00
+				pendingUninits: 0
+				processingUninits: false
+				weakReferenceList: 0xbb47762c90
+				currentMarkHandler: 0x7fd36ef22d20
+				imageStats: 0
+				allocations: 166324
+				collections: 24
+				restoredImage: àU:Õ•
+				globalStrings: 0
+				globalReferences: 0xbb427d01a0
+			}
+			requestLength: 4912
+			type: 76
+
+		0x7fd36ef22190	0x95d50cab1b	StringHashCollection::allocateContents(size_t, size_t) + 0x1b (/sources/oorexx-5.0.0/interpreter/classes/support/HashCollection.cpp:-1)
+			Variables:
+			bucketSize: 101
+			totalSize: 1
+
+		0x7fd36ef221e0	0x95d50caedb	HashCollection::expandContents(size_t) + 0x2b (/sources/oorexx-5.0.0/interpreter/classes/support/HashCollection.cpp:-1)
+			Variables:
+			this: 0xbb46833ee0 {
+				MinimumBucketSize: Invalid Argument
+				DefaultTableSize: Invalid Argument
+				contents: 0xbb46833f10
+			}
+			bucketSize: 24489
+			newContents {
+				protectedObject: 0xbb428b12a0
+			}
+
+		0x7fd36ef22220	0x95d50ccffe	HashContents::merge(HashCollection*) + 0x1e (/sources/oorexx-5.0.0/interpreter/classes/support/HashContents.cpp:-1)
+			Variables:
+			this: 0xbb42e7c460 {
+				NoMore: Invalid Argument
+				NoLink: Invalid Argument
+				bucketSize: 81
+				totalSize: 162
+				itemCount: 67
+				freeChain: 102
+				entries: Unavailable
+			}
+			target: 0xbb46833ee0 {
+				MinimumBucketSize: Invalid Argument
+				DefaultTableSize: Invalid Argument
+				contents: 0xbb46833f10
+			}
+
+		0x7fd36ef22250	0x95d50b6426	PackageClass::mergeRequired(PackageClass*) + 0x56 (/sources/oorexx-5.0.0/interpreter/classes/PackageClass.cpp:-1)
+			Variables:
+			this: 0xbb4778ec10 {
+				classInstance: Invalid Argument
+				requiredLanguageLevel: LanguageLevel0605
+				source: 0xbb4778ebd0
+				programName: 0xbb4778eb50
+				programDirectory: 0xbb4778ed90
+				programFile: 0xbb4778ee70
+				programExtension: 0xbb4778ee10
+				securityManager: 0
+				initCode: 0xbb477f8a00
+				mainExecutable: 0xbb46833010
+				parentPackage: 0
+				routines: 0
+				publicRoutines: 0
+				libraries: 0
+				requires: 0xbb477fc650
+				classes: 0xbb46832f30
+				resources: 0
+				unattachedMethods: 0
+				namespaces: 0
+				loadedPackages: 0xbb468332f0
+				installedPublicClasses: 0
+				installedClasses: 0
+				mergedPublicClasses: 0
+				mergedPublicRoutines: 0xbb46833ee0
+				annotations: 0
+				installRequired: false
+				packageLocal: 0
+				reserved: Unavailable
+			}
+			mergeSource: 0xbb428a8030 {
+				classInstance: Invalid Argument
+				requiredLanguageLevel: LanguageLevel0605
+				source: 0xbb428a7e50
+				programName: 0xbb428a7de0
+				programDirectory: 0xbb428a81b0
+				programFile: 0xbb428a8270
+				programExtension: 0xbb428a8210
+				securityManager: 0
+				initCode: 0xbb428b0d70
+				mainExecutable: 0xbb429da060
+				parentPackage: 0
+				routines: 0xbb428b0de0
+				publicRoutines: 0xbb428b1180
+				libraries: 0
+				requires: 0xbb428b18c0
+				classes: 0xbb429d9f70
+				resources: 0
+				unattachedMethods: 0
+				namespaces: 0
+				loadedPackages: 0xbb42b7cff0
+				installedPublicClasses: 0xbb42b91ee0
+				installedClasses: 0xbb42b91b40
+				mergedPublicClasses: 0xbb42b7d470
+				mergedPublicRoutines: 0xbb42b7d0d0
+				annotations: 0
+				installRequired: false
+				packageLocal: 0
+				reserved: Unavailable
+			}
+
+		0x7fd36ef222c0	0x95d50b71f9	PackageClass::loadRequires(Activity*, RexxString*) + 0x69 (/sources/oorexx-5.0.0/interpreter/classes/PackageClass.cpp:-1)
+			Variables:
+			this: 0xbb4778ec10 {
+				classInstance: Invalid Argument
+				requiredLanguageLevel: LanguageLevel0605
+				source: 0xbb4778ebd0
+				programName: 0xbb4778eb50
+				programDirectory: 0xbb4778ed90
+				programFile: 0xbb4778ee70
+				programExtension: 0xbb4778ee10
+				securityManager: 0
+				initCode: 0xbb477f8a00
+				mainExecutable: 0xbb46833010
+				parentPackage: 0
+				routines: 0
+				publicRoutines: 0
+				libraries: 0
+				requires: 0xbb477fc650
+				classes: 0xbb46832f30
+				resources: 0
+				unattachedMethods: 0
+				namespaces: 0
+				loadedPackages: 0xbb468332f0
+				installedPublicClasses: 0
+				installedClasses: 0
+				mergedPublicClasses: 0
+				mergedPublicRoutines: 0xbb46833ee0
+				annotations: 0
+				installRequired: false
+				packageLocal: 0
+				reserved: Unavailable
+			}
+			activity: 0xbb427debf0 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0xbb427df1e0
+				threadContext
+				oldActivity: 0
+				conditionobj: 0
+				requiresTable: 0xbb427d8d70
+				dispatchMessage: 0
+				activations: 0xbb427d08c0
+				activationStackSize: 20
+				stackFrameDepth: 9
+				currentRexxFrame: 0xbb46833050
+				topStackFrame: 0xbb46833050
+				currentExit: 0
+				waitingObject: 0
+				numericSettings: 0xbb46833100
+				stackcheck: true
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: true
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: false
+				nestedCount: 1
+				attachCount: 1
+				newThreadAttached: true
+				stackBase: 
+				clauseExitUsed: false
+				randomSeed: 17376221603667046241
+				protectedObjects: 0x7fd36ef22260
+				activationFrames: 0x7fd36ef22350
+				nestedActivity: 0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			target: 0xbb477f89a0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 3031873063400389
+				length: 10
+				numberStringValue: 0
+				stringData: ooTe
+			}
+			instance: No such file or directory
+			fullName: 0xbb46833280 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 0
+				length: 26
+				numberStringValue: 0
+				stringData: /boo
+			}
+			p {
+				protectedObject: 0xbb46833280
+			}
+			packageInstance: 0xbb428a8030 {
+				classInstance: Invalid Argument
+				requiredLanguageLevel: LanguageLevel0605
+				source: 0xbb428a7e50
+				programName: 0xbb428a7de0
+				programDirectory: 0xbb428a81b0
+				programFile: 0xbb428a8270
+				programExtension: 0xbb428a8210
+				securityManager: 0
+				initCode: 0xbb428b0d70
+				mainExecutable: 0xbb429da060
+				parentPackage: 0
+				routines: 0xbb428b0de0
+				publicRoutines: 0xbb428b1180
+				libraries: 0
+				requires: 0xbb428b18c0
+				classes: 0xbb429d9f70
+				resources: 0
+				unattachedMethods: 0
+				namespaces: 0
+				loadedPackages: 0xbb42b7cff0
+				installedPublicClasses: 0xbb42b91ee0
+				installedClasses: 0xbb42b91b40
+				mergedPublicClasses: 0xbb42b7d470
+				mergedPublicRoutines: 0xbb42b7d0d0
+				annotations: 0
+				installRequired: false
+				packageLocal: 0
+				reserved: Unavailable
+			}
+
+		0x7fd36ef222f0	0x95d512e6c0	RequiresDirective::install(PackageClass*, RexxActivation*) + 0x30 (/sources/oorexx-5.0.0/interpreter/instructions/RequiresDirective.cpp:-1)
+			Variables:
+			this: 0xbb477fd030 {
+				name: 0xbb477f89a0
+				namespaceName: 0
+			}
+			package: 0xbb4778ec10 {
+				classInstance: Invalid Argument
+				requiredLanguageLevel: LanguageLevel0605
+				source: 0xbb4778ebd0
+				programName: 0xbb4778eb50
+				programDirectory: 0xbb4778ed90
+				programFile: 0xbb4778ee70
+				programExtension: 0xbb4778ee10
+				securityManager: 0
+				initCode: 0xbb477f8a00
+				mainExecutable: 0xbb46833010
+				parentPackage: 0
+				routines: 0
+				publicRoutines: 0
+				libraries: 0
+				requires: 0xbb477fc650
+				classes: 0xbb46832f30
+				resources: 0
+				unattachedMethods: 0
+				namespaces: 0
+				loadedPackages: 0xbb468332f0
+				installedPublicClasses: 0
+				installedClasses: 0
+				mergedPublicClasses: 0
+				mergedPublicRoutines: 0xbb46833ee0
+				annotations: 0
+				installRequired: false
+				packageLocal: 0
+				reserved: Unavailable
+			}
+			context: 0xbb46833050 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb477f8a00
+				packageObject: 0xbb4778ec10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb43498ad0
+				argCount: 1
+				doStack: 0
+				current: 0xbb477fd030
+				next: 0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: EXTERNALCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 17376221603667046241
+				randomSet: false
+				blockNest: 0
+				instructionCount: 0
+			}
+
+		0x7fd36ef22330	0x95d50b6f42	PackageClass::processInstall(RexxActivation*) + 0xa2 (/sources/oorexx-5.0.0/interpreter/classes/PackageClass.cpp:-1)
+			Variables:
+			this: 0xbb4778ec10 {
+				classInstance: Invalid Argument
+				requiredLanguageLevel: LanguageLevel0605
+				source: 0xbb4778ebd0
+				programName: 0xbb4778eb50
+				programDirectory: 0xbb4778ed90
+				programFile: 0xbb4778ee70
+				programExtension: 0xbb4778ee10
+				securityManager: 0
+				initCode: 0xbb477f8a00
+				mainExecutable: 0xbb46833010
+				parentPackage: 0
+				routines: 0
+				publicRoutines: 0
+				libraries: 0
+				requires: 0xbb477fc650
+				classes: 0xbb46832f30
+				resources: 0
+				unattachedMethods: 0
+				namespaces: 0
+				loadedPackages: 0xbb468332f0
+				installedPublicClasses: 0
+				installedClasses: 0
+				mergedPublicClasses: 0
+				mergedPublicRoutines: 0xbb46833ee0
+				annotations: 0
+				installRequired: false
+				packageLocal: 0
+				reserved: Unavailable
+			}
+			activation: 0xbb46833050 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb477f8a00
+				packageObject: 0xbb4778ec10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb43498ad0
+				argCount: 1
+				doStack: 0
+				current: 0xbb477fd030
+				next: 0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: EXTERNALCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 17376221603667046241
+				randomSet: false
+				blockNest: 0
+				instructionCount: 0
+			}
+			count: No such file or directory
+			i: 0
+
+		0x7fd36ef223b0	0x95d50ea419	RexxActivation::run(RexxObject*, RexxString*, RexxObject**, size_t, RexxInstruction*, ProtectedObject&) + 0x6c9 (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:-1)
+			Variables:
+			this: 0xbb46833050 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb477f8a00
+				packageObject: 0xbb4778ec10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb43498ad0
+				argCount: 1
+				doStack: 0
+				current: 0xbb477fd030
+				next: 0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: EXTERNALCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 17376221603667046241
+				randomSet: false
+				blockNest: 0
+				instructionCount: 0
+			}
+			_receiver: 0 {
+				objectVariables: Bad address
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			name: 0xbb42c72170 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 4551676588505705869
+				length: 48
+				numberStringValue: 0
+				stringData: /boo
+			}
+			_arglist: 0x78 {
+				*_arglist: Bad address
+			}
+			_argcount: 643527666456
+			start: 0x17 {
+				instructionType: Bad address
+				nextInstruction: Bad address
+			}
+			resultObj: 0x7fd36ef225a0 {
+				protectedObject: 0
+			}
+			frame {
+				activation: 0xbb46833050
+			}
+
+		0x7fd36ef223e0	0x95d50bab98	RoutineClass::call(Activity*, RexxString*, RexxObject**, size_t, RexxString*, RexxString*, ActivationContext, ProtectedObject&) + 0x28 (/sources/oorexx-5.0.0/interpreter/classes/RoutineClass.cpp:-1)
+			Variables:
+			this: 0x5fa9 {
+				classInstance: Invalid Argument
+			}
+			activity: 0xbb480ae890 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0x2
+				threadContext
+				oldActivity: 0x3
+				conditionobj: 0
+				requiresTable: 0xbb49b2dc80
+				dispatchMessage: 0xbb425c1a00
+				activations: 0
+				activationStackSize: 2
+				stackFrameDepth: 804367558656
+				currentRexxFrame: 0xbb425d16e0
+				topStackFrame: 0x95d53a85c8
+				currentExit: 0x60
+				waitingObject: 0x22
+				numericSettings: 0x8
+				stackcheck: false
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: false
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: true
+				nestedCount: 3761409897388008820
+				attachCount: 0
+				newThreadAttached: false
+				stackBase: àØÕ•
+				clauseExitUsed: true
+				randomSeed: 2
+				protectedObjects: 0x95d53cb4f0
+				activationFrames: 0xbb49b242f0
+				nestedActivity: 0xbb480ae8a0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			routineName: 0x78 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: Bad address
+				length: Bad address
+				numberStringValue: Bad address
+				stringData: Bad address
+			}
+			argPtr: 0x95d53ceb18 {
+				*argPtr: 0
+			}
+			argcount: 23
+			calltype: 0x7fd36ef225a0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 804357987632
+				length: 804276299296
+				numberStringValue: 0xbb425c2080
+				stringData: &òn
+			}
+			environment: 0xbb42796bb0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 3669
+				length: 2
+				numberStringValue: 0
+				stringData: sh
+			}
+			context: EXTERNALCALL
+			result: 0x7fd36ef225a0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef224a0	0x95d50e8878	RexxActivation::callExternalRexx(RexxString*, RexxObject**, size_t, RexxString*, ProtectedObject&) + 0xc8 (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:-1)
+			Variables:
+			this: 0xbb4778dd30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a7700
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434989c8
+				argCount: 1
+				doStack: 0
+				current: 0xbb429a6620
+				next: 0xbb429a6750
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 6885706020396229088
+				randomSet: false
+				blockNest: 0
+				instructionCount: 3
+			}
+			target: 0xbb42c72170 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 4551676588505705869
+				length: 48
+				numberStringValue: 0
+				stringData: /boo
+			}
+			arguments: 0xbb43498ad0 {
+				*arguments: 0xbb42c4b380
+			}
+			argcount: 1
+			calltype: 0xbb427973c0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2268875328128644
+				length: 10
+				numberStringValue: 0
+				stringData: SUBR
+			}
+			resultObj: 0x7fd36ef225a0 {
+				protectedObject: 0
+			}
+			filename {
+				protectedObject: 0xbb4778eb50
+			}
+			routine {
+				protectedObject: 0xbb46833010
+			}
+
+		0x7fd36ef224f0	0x95d5144f9c	SystemInterpreter::invokeExternalFunction(RexxActivation*, Activity*, RexxString*, RexxObject**, size_t, RexxString*, ProtectedObject&) + 0x8c (/sources/oorexx-5.0.0/interpreter/platform/unix/ExternalFunctions.cpp:-1)
+			Variables:
+			activation: 0xbb4778dd30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a7700
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434989c8
+				argCount: 1
+				doStack: 0
+				current: 0xbb429a6620
+				next: 0xbb429a6750
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 6885706020396229088
+				randomSet: false
+				blockNest: 0
+				instructionCount: 3
+			}
+			activity: 0xbb427debf0 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0xbb427df1e0
+				threadContext
+				oldActivity: 0
+				conditionobj: 0
+				requiresTable: 0xbb427d8d70
+				dispatchMessage: 0
+				activations: 0xbb427d08c0
+				activationStackSize: 20
+				stackFrameDepth: 9
+				currentRexxFrame: 0xbb46833050
+				topStackFrame: 0xbb46833050
+				currentExit: 0
+				waitingObject: 0
+				numericSettings: 0xbb46833100
+				stackcheck: true
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: true
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: false
+				nestedCount: 1
+				attachCount: 1
+				newThreadAttached: true
+				stackBase: 
+				clauseExitUsed: false
+				randomSeed: 17376221603667046241
+				protectedObjects: 0x7fd36ef22260
+				activationFrames: 0x7fd36ef22350
+				nestedActivity: 0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			target: 0xbb42c72170 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 4551676588505705869
+				length: 48
+				numberStringValue: 0
+				stringData: /boo
+			}
+			arguments: 0xbb43498ad0 {
+				*arguments: 0xbb42c4b380
+			}
+			argcount: 1
+			calltype: 0xbb427973c0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2268875328128644
+				length: 10
+				numberStringValue: 0
+				stringData: SUBR
+			}
+			result: 0x7fd36ef225a0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22550	0x95d50e8537	RexxActivation::externalCall(RoutineClass*&, RexxString*, RexxObject**, size_t, RexxString*, ProtectedObject&) + 0x127 (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:-1)
+			Variables:
+			this: 0xbb4778dd30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a7700
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434989c8
+				argCount: 1
+				doStack: 0
+				current: 0xbb429a6620
+				next: 0xbb429a6750
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 6885706020396229088
+				randomSet: false
+				blockNest: 0
+				instructionCount: 3
+			}
+			routine: 0x7fd36ef22578 {
+				*routine: 0
+			}
+			target: 0xbb42c72170 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 4551676588505705869
+				length: 48
+				numberStringValue: 0
+				stringData: /boo
+			}
+			arguments: 0xbb43498ad0 {
+				*arguments: 0xbb42c4b380
+			}
+			argcount: 1
+			calltype: 0xbb427973c0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2268875328128644
+				length: 10
+				numberStringValue: 0
+				stringData: SUBR
+			}
+			resultObj: 0x7fd36ef225a0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22600	0x95d5120b80	RexxInstructionDynamicCall::execute(RexxActivation*, ExpressionStack*) + 0x340 (/sources/oorexx-5.0.0/interpreter/instructions/CallInstruction.cpp:-1)
+			Variables:
+			this: 0xbb429a6620 {
+				argumentCount: 1
+				arguments: Unavailable
+			}
+			context: 0xbb4778dd30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a7700
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434989c8
+				argCount: 1
+				doStack: 0
+				current: 0xbb429a6620
+				next: 0xbb429a6750
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 6885706020396229088
+				randomSet: false
+				blockNest: 0
+				instructionCount: 3
+			}
+			stack: 0xbb4778de90 {
+				size: 17
+				top: 0xbb43498ad0
+				stack: 0xbb43498ac0
+			}
+			targetName {
+				protectedObject: 0xbb42c72170
+			}
+			result {
+				protectedObject: 0
+			}
+			resolvedRoutine: 0 {
+				classInstance: Invalid Argument
+			}
+
+		0x7fd36ef22680	0x95d50e9e6b	RexxActivation::run(RexxObject*, RexxString*, RexxObject**, size_t, RexxInstruction*, ProtectedObject&) + 0x11b (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:62)
+			Variables:
+			this: 0xbb4778dd30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a7700
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434989c8
+				argCount: 1
+				doStack: 0
+				current: 0xbb429a6620
+				next: 0xbb429a6750
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 6885706020396229088
+				randomSet: false
+				blockNest: 0
+				instructionCount: 3
+			}
+			resultObj: 0x7fd36ef22710 {
+				protectedObject: 0
+			}
+			frame {
+				activation: 0xbb4778dd30
+			}
+			nextInst: 0xbb429a6620 {
+				instructionType: KEYWORD_CALL_VALUE
+				nextInstruction: 0xbb429a6750
+			}
+
+		0x7fd36ef226a0	0x95d50902ff	MethodClass::run(Activity*, RexxObject*, RexxString*, RexxObject**, size_t, ProtectedObject&) + 0x1f (/sources/oorexx-5.0.0/interpreter/classes/MethodClass.cpp:-1)
+			Variables:
+			this: 0x5fa9 {
+				classInstance: Invalid Argument
+				scope: Bad address
+			}
+			activity: 0xbb480ae890 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0x2
+				threadContext
+				oldActivity: 0x3
+				conditionobj: 0
+				requiresTable: 0xbb49b2dc80
+				dispatchMessage: 0xbb425c1a00
+				activations: 0
+				activationStackSize: 2
+				stackFrameDepth: 804367558656
+				currentRexxFrame: 0xbb425d16e0
+				topStackFrame: 0x95d53a85c8
+				currentExit: 0x60
+				waitingObject: 0x22
+				numericSettings: 0x8
+				stackcheck: false
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: false
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: true
+				nestedCount: 3761409897388008820
+				attachCount: 0
+				newThreadAttached: false
+				stackBase: àØÕ•
+				clauseExitUsed: true
+				randomSeed: 2
+				protectedObjects: 0x95d53cb4f0
+				activationFrames: 0xbb49b242f0
+				nestedActivity: 0xbb480ae8a0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			receiver: 0x78 {
+				objectVariables: Bad address
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			msgname: 0x95d53ceb18 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 643525116230
+				length: 0
+				numberStringValue: 0
+				stringData: 
+			}
+			argPtr: 0x17 {
+				*argPtr: Bad address
+			}
+			count: 140546076190480
+			result: 0x7fd36ef22710 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22700	0x95d50b0385	RexxObject::messageSend(RexxString*, RexxObject**, size_t, ProtectedObject&) + 0xa5 (/sources/oorexx-5.0.0/interpreter/classes/ObjectClass.cpp:-1)
+			Variables:
+			this: 0xbb42c599e0 {
+				objectVariables: 0xbb42c59c40
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			msgname: 0xbb4299f9b0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 1862836528596354539
+				length: 12
+				numberStringValue: 0
+				stringData: GETC
+			}
+			arguments: 0xbb434989c8 {
+				*arguments: 0xbb42c72170
+			}
+			count: 1
+			result: 0x7fd36ef22710 {
+				protectedObject: 0
+			}
+			method_save: 0x5fa9 {
+				classInstance: Invalid Argument
+				scope: Bad address
+			}
+			error: Error_No_method_name
+
+		0x7fd36ef22770	0x95d511c042	RexxExpressionMessage::evaluate(RexxActivation*, ExpressionStack*) + 0x212 (/sources/oorexx-5.0.0/interpreter/expression/ExpressionMessage.cpp:-1)
+			Variables:
+			this: 0xbb4299fa70 {
+				target: 0xbb425c1a00
+				messageName: 0xbb4299f9b0
+				super: 0
+				doubleTilde: false
+				argumentCount: 1
+				arguments: Unavailable
+			}
+			context: 0xbb42c5a6b0 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a4850
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434988b0
+				argCount: 1
+				doStack: 0xbb42d654a0
+				current: 0xbb4299fac0
+				next: 0xbb4299fbb0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 5058448616271969628
+				randomSet: false
+				blockNest: 9
+				instructionCount: 32
+			}
+			stack: 0xbb42c5a810 {
+				size: 17
+				top: 0xbb434989c8
+				stack: 0xbb434989b8
+			}
+			_target: 0xbb42c599e0 {
+				objectVariables: 0xbb42c59c40
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			result {
+				protectedObject: 0
+			}
+
+		0x7fd36ef227b0	0x95d511f5f0	RexxInstructionAssignment::execute(RexxActivation*, ExpressionStack*) + 0xe0 (/sources/oorexx-5.0.0/interpreter/instructions/AssignmentInstruction.cpp:-1)
+			Variables:
+			this: 0xbb4299fac0 {
+				expression: 0xbb4299fa70
+				variable: 0xbb4299fb20
+			}
+			context: 0xbb42c5a6b0 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a4850
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434988b0
+				argCount: 1
+				doStack: 0xbb42d654a0
+				current: 0xbb4299fac0
+				next: 0xbb4299fbb0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 5058448616271969628
+				randomSet: false
+				blockNest: 9
+				instructionCount: 32
+			}
+			stack: 0x1 {
+				size: Bad address
+				top: Bad address
+				stack: Bad address
+			}
+
+		0x7fd36ef22830	0x95d50e9e6b	RexxActivation::run(RexxObject*, RexxString*, RexxObject**, size_t, RexxInstruction*, ProtectedObject&) + 0x11b (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:62)
+			Variables:
+			this: 0xbb42c5a6b0 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb429a4850
+				packageObject: 0xbb428a8030
+				scope: 0xbb42be79a0
+				receiver: 0xbb42c599e0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434988b0
+				argCount: 1
+				doStack: 0xbb42d654a0
+				current: 0xbb4299fac0
+				next: 0xbb4299fbb0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: METHODCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 5058448616271969628
+				randomSet: false
+				blockNest: 9
+				instructionCount: 32
+			}
+			resultObj: 0x7fd36ef228c0 {
+				protectedObject: 0
+			}
+			frame {
+				activation: 0xbb42c5a6b0
+			}
+			nextInst: 0xbb4299fac0 {
+				instructionType: KEYWORD_ASSIGNMENT
+				nextInstruction: 0xbb4299fbb0
+			}
+
+		0x7fd36ef22850	0x95d50902ff	MethodClass::run(Activity*, RexxObject*, RexxString*, RexxObject**, size_t, ProtectedObject&) + 0x1f (/sources/oorexx-5.0.0/interpreter/classes/MethodClass.cpp:12)
+			Variables:
+			this: 0x5fa9 {
+				classInstance: Invalid Argument
+				scope: Bad address
+			}
+			activity: 0xbb480ae890 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0x2
+				threadContext
+				oldActivity: 0x3
+				conditionobj: 0
+				requiresTable: 0xbb49b2dc80
+				dispatchMessage: 0xbb425c1a00
+				activations: 0
+				activationStackSize: 2
+				stackFrameDepth: 804367558656
+				currentRexxFrame: 0xbb425d16e0
+				topStackFrame: 0x95d53a85c8
+				currentExit: 0x60
+				waitingObject: 0x22
+				numericSettings: 0x8
+				stackcheck: false
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: false
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: true
+				nestedCount: 3761409897388008820
+				attachCount: 0
+				newThreadAttached: false
+				stackBase: àØÕ•
+				clauseExitUsed: true
+				randomSeed: 2
+				protectedObjects: 0x95d53cb4f0
+				activationFrames: 0xbb49b242f0
+				nestedActivity: 0xbb480ae8a0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			receiver: 0x78 {
+				objectVariables: Bad address
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			msgname: 0x95d53ceb18 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 643525116230
+				length: 0
+				numberStringValue: 0
+				stringData: 
+			}
+			argPtr: 0x17 {
+				*argPtr: Bad address
+			}
+			count: 140546076190912
+			result: 0x7fd36ef228c0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef228b0	0x95d50b0385	RexxObject::messageSend(RexxString*, RexxObject**, size_t, ProtectedObject&) + 0xa5 (/sources/oorexx-5.0.0/interpreter/classes/ObjectClass.cpp:50)
+			Variables:
+			this: 0xbb42c599e0 {
+				objectVariables: 0xbb42c59c40
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			msgname: 0xbb42803ef0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2541176
+				length: 4
+				numberStringValue: 0
+				stringData: SEEK
+			}
+			arguments: 0xbb434988b0 {
+				*arguments: 0xbb42c4f530
+			}
+			count: 1
+			result: 0x7fd36ef228c0 {
+				protectedObject: 0
+			}
+			method_save: 0x5fa9 {
+				classInstance: Invalid Argument
+				scope: Bad address
+			}
+			error: Error_No_method_name
+
+		0x7fd36ef22920	0x95d511c042	RexxExpressionMessage::evaluate(RexxActivation*, ExpressionStack*) + 0x212 (/sources/oorexx-5.0.0/interpreter/expression/ExpressionMessage.cpp:140)
+			Variables:
+			this: 0xbb42803fb0 {
+				target: 0xbb42802100
+				messageName: 0xbb42803ef0
+				super: 0
+				doubleTilde: false
+				argumentCount: 1
+				arguments: Unavailable
+			}
+			context: 0xbb428a7bb0 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb42807c20
+				packageObject: 0xbb427f81c0
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434987a0
+				argCount: 1
+				doStack: 0
+				current: 0xbb42804000
+				next: 0xbb428042b0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: EXTERNALCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 17424358189342956900
+				randomSet: false
+				blockNest: 0
+				instructionCount: 26
+			}
+			stack: 0xbb428a7d10 {
+				size: 16
+				top: 0xbb434988b0
+				stack: 0xbb434988a0
+			}
+			_target: 0xbb42c599e0 {
+				objectVariables: 0xbb42c59c40
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+			}
+			result {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22960	0x95d511f5f0	RexxInstructionAssignment::execute(RexxActivation*, ExpressionStack*) + 0xe0 (/sources/oorexx-5.0.0/interpreter/instructions/AssignmentInstruction.cpp:63)
+			Variables:
+			this: 0xbb42804000 {
+				expression: 0xbb42803fb0
+				variable: 0xbb42804060
+			}
+			context: 0xbb428a7bb0 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb42807c20
+				packageObject: 0xbb427f81c0
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434987a0
+				argCount: 1
+				doStack: 0
+				current: 0xbb42804000
+				next: 0xbb428042b0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: EXTERNALCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 17424358189342956900
+				randomSet: false
+				blockNest: 0
+				instructionCount: 26
+			}
+			stack: 0x1 {
+				size: Bad address
+				top: Bad address
+				stack: Bad address
+			}
+
+		0x7fd36ef229e0	0x95d50e9e6b	RexxActivation::run(RexxObject*, RexxString*, RexxObject**, size_t, RexxInstruction*, ProtectedObject&) + 0x11b (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:62)
+			Variables:
+			this: 0xbb428a7bb0 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb42807c20
+				packageObject: 0xbb427f81c0
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb434987a0
+				argCount: 1
+				doStack: 0
+				current: 0xbb42804000
+				next: 0xbb428042b0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: EXTERNALCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 17424358189342956900
+				randomSet: false
+				blockNest: 0
+				instructionCount: 26
+			}
+			resultObj: 0x7fd36ef22ba0 {
+				protectedObject: 0
+			}
+			frame {
+				activation: 0xbb428a7bb0
+			}
+			nextInst: 0xbb42804000 {
+				instructionType: KEYWORD_ASSIGNMENT
+				nextInstruction: 0xbb428042b0
+			}
+
+		0x7fd36ef22a10	0x95d50bab98	RoutineClass::call(Activity*, RexxString*, RexxObject**, size_t, RexxString*, RexxString*, ActivationContext, ProtectedObject&) + 0x28 (/sources/oorexx-5.0.0/interpreter/classes/RoutineClass.cpp:15)
+			Variables:
+			this: 0x5fa9 {
+				classInstance: Invalid Argument
+			}
+			activity: 0xbb480ae890 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0x2
+				threadContext
+				oldActivity: 0x3
+				conditionobj: 0
+				requiresTable: 0xbb49b2dc80
+				dispatchMessage: 0xbb425c1a00
+				activations: 0
+				activationStackSize: 2
+				stackFrameDepth: 804367558656
+				currentRexxFrame: 0xbb425d16e0
+				topStackFrame: 0x95d53a85c8
+				currentExit: 0x60
+				waitingObject: 0x22
+				numericSettings: 0x8
+				stackcheck: false
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: false
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: true
+				nestedCount: 3761409897388008820
+				attachCount: 0
+				newThreadAttached: false
+				stackBase: àØÕ•
+				clauseExitUsed: true
+				randomSeed: 2
+				protectedObjects: 0x95d53cb4f0
+				activationFrames: 0xbb49b242f0
+				nestedActivity: 0xbb480ae8a0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			routineName: 0x78 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: Bad address
+				length: Bad address
+				numberStringValue: Bad address
+				stringData: Bad address
+			}
+			argPtr: 0x95d53ceb18 {
+				*argPtr: 0
+			}
+			argcount: 23
+			calltype: 0x7fd36ef22ba0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 804274526768
+				length: 804274505600
+				numberStringValue: 0x95d511db30
+				stringData: [B
+			}
+			environment: 0xbb42796bb0 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 3669
+				length: 2
+				numberStringValue: 0
+				stringData: sh
+			}
+			context: EXTERNALCALL
+			result: 0x7fd36ef22ba0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22ad0	0x95d50e8878	RexxActivation::callExternalRexx(RexxString*, RexxObject**, size_t, RexxString*, ProtectedObject&) + 0xc8 (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:50)
+			Variables:
+			this: 0xbb427f5a30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb427f09f0
+				packageObject: 0xbb427e6e10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb427e5050
+				argCount: 1
+				doStack: 0
+				current: 0xbb427f0780
+				next: 0xbb427f08d0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: PROGRAMCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 15820563874158032478
+				randomSet: false
+				blockNest: 0
+				instructionCount: 30
+			}
+			target: 0xbb427f0670 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 3244220341487157
+				length: 10
+				numberStringValue: 0
+				stringData: work
+			}
+			arguments: 0xbb434987a0 {
+				*arguments: 0xbb427e50d0
+			}
+			argcount: 1
+			calltype: 0xbb42796b50 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2003618325464
+				length: 8
+				numberStringValue: 0
+				stringData: FUNC
+			}
+			resultObj: 0x7fd36ef22ba0 {
+				protectedObject: 0
+			}
+			filename {
+				protectedObject: 0xbb427f7f70
+			}
+			routine {
+				protectedObject: 0xbb428a7b70
+			}
+
+		0x7fd36ef22b20	0x95d5144f9c	SystemInterpreter::invokeExternalFunction(RexxActivation*, Activity*, RexxString*, RexxObject**, size_t, RexxString*, ProtectedObject&) + 0x8c (/sources/oorexx-5.0.0/interpreter/platform/unix/ExternalFunctions.cpp:51)
+			Variables:
+			activation: 0xbb427f5a30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb427f09f0
+				packageObject: 0xbb427e6e10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb427e5050
+				argCount: 1
+				doStack: 0
+				current: 0xbb427f0780
+				next: 0xbb427f08d0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: PROGRAMCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 15820563874158032478
+				randomSet: false
+				blockNest: 0
+				instructionCount: 30
+			}
+			activity: 0xbb427debf0 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0xbb427df1e0
+				threadContext
+				oldActivity: 0
+				conditionobj: 0
+				requiresTable: 0xbb427d8d70
+				dispatchMessage: 0
+				activations: 0xbb427d08c0
+				activationStackSize: 20
+				stackFrameDepth: 9
+				currentRexxFrame: 0xbb46833050
+				topStackFrame: 0xbb46833050
+				currentExit: 0
+				waitingObject: 0
+				numericSettings: 0xbb46833100
+				stackcheck: true
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: true
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: false
+				nestedCount: 1
+				attachCount: 1
+				newThreadAttached: true
+				stackBase: 
+				clauseExitUsed: false
+				randomSeed: 17376221603667046241
+				protectedObjects: 0x7fd36ef22260
+				activationFrames: 0x7fd36ef22350
+				nestedActivity: 0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			target: 0xbb427f0670 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 3244220341487157
+				length: 10
+				numberStringValue: 0
+				stringData: work
+			}
+			arguments: 0xbb434987a0 {
+				*arguments: 0xbb427e50d0
+			}
+			argcount: 1
+			calltype: 0xbb42796b50 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2003618325464
+				length: 8
+				numberStringValue: 0
+				stringData: FUNC
+			}
+			result: 0x7fd36ef22ba0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22b80	0x95d50e8537	RexxActivation::externalCall(RoutineClass*&, RexxString*, RexxObject**, size_t, RexxString*, ProtectedObject&) + 0x127 (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:95)
+			Variables:
+			this: 0xbb427f5a30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb427f09f0
+				packageObject: 0xbb427e6e10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb427e5050
+				argCount: 1
+				doStack: 0
+				current: 0xbb427f0780
+				next: 0xbb427f08d0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: PROGRAMCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 15820563874158032478
+				randomSet: false
+				blockNest: 0
+				instructionCount: 30
+			}
+			routine: 0x7fd36ef22b98 {
+				*routine: 0
+			}
+			target: 0xbb427f0670 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 3244220341487157
+				length: 10
+				numberStringValue: 0
+				stringData: work
+			}
+			arguments: 0xbb434987a0 {
+				*arguments: 0xbb427e50d0
+			}
+			argcount: 1
+			calltype: 0xbb42796b50 {
+				operatorMethods: Invalid Argument
+				classInstance: Invalid Argument
+				STRIP_BOTH: Invalid Argument
+				STRIP_LEADING: Invalid Argument
+				STRIP_TRAILING: Invalid Argument
+				DATATYPE_ALPHANUMERIC: Invalid Argument
+				DATATYPE_BINARY: Invalid Argument
+				DATATYPE_INTERNAL_WHOLE: Invalid Argument
+				DATATYPE_LOWERCASE: Invalid Argument
+				DATATYPE_MIXEDCASE: Invalid Argument
+				DATATYPE_NUMBER: Invalid Argument
+				DATATYPE_SYMBOL: Invalid Argument
+				DATATYPE_VARIABLE: Invalid Argument
+				DATATYPE_UPPERCASE: Invalid Argument
+				DATATYPE_WHOLE_NUMBER: Invalid Argument
+				DATATYPE_HEX: Invalid Argument
+				DATATYPE_9DIGITS: Invalid Argument
+				DATATYPE_LOGICAL: Invalid Argument
+				VERIFY_MATCH: Invalid Argument
+				VERIFY_NOMATCH: Invalid Argument
+				ch_SPACE: Invalid Argument
+				ch_TAB: Invalid Argument
+				ch_MINUS: Invalid Argument
+				ch_PLUS: Invalid Argument
+				ch_PERIOD: Invalid Argument
+				ch_ZERO: Invalid Argument
+				ch_ONE: Invalid Argument
+				ch_FIVE: Invalid Argument
+				ch_NINE: Invalid Argument
+				HEX_CHAR_STR: Invalid Argument
+				ALPHANUM: Invalid Argument
+				BINARY: Invalid Argument
+				LOWER_ALPHA: Invalid Argument
+				MIXED_ALPHA: Invalid Argument
+				UPPER_ALPHA: Invalid Argument
+				DIGITS_BASE64: Invalid Argument
+				ALNUM: Invalid Argument
+				ALPHA: Invalid Argument
+				BLANK: Invalid Argument
+				CNTRL: Invalid Argument
+				DIGIT: Invalid Argument
+				GRAPH: Invalid Argument
+				LOWER: Invalid Argument
+				PRINT: Invalid Argument
+				PUNCT: Invalid Argument
+				SPACE: Invalid Argument
+				UPPER: Invalid Argument
+				XDIGIT: Invalid Argument
+				hashValue: 2003618325464
+				length: 8
+				numberStringValue: 0
+				stringData: FUNC
+			}
+			resultObj: 0x7fd36ef22ba0 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22c00	0x95d511b7aa	RexxExpressionFunction::evaluate(RexxActivation*, ExpressionStack*) + 0x1da (/sources/oorexx-5.0.0/interpreter/expression/ExpressionFunction.cpp:-1)
+			Variables:
+			this: 0xbb427f0730 {
+				functionName: 0xbb427f0670
+				target: 0
+				externalTarget: 0
+				builtinIndex: 0
+				argumentCount: 1
+				arguments: Unavailable
+			}
+			context: 0xbb427f5a30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb427f09f0
+				packageObject: 0xbb427e6e10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb427e5050
+				argCount: 1
+				doStack: 0
+				current: 0xbb427f0780
+				next: 0xbb427f08d0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: PROGRAMCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 15820563874158032478
+				randomSet: false
+				blockNest: 0
+				instructionCount: 30
+			}
+			stack: 0xbb427f5b90 {
+				size: 16
+				top: 0xbb434987a0
+				stack: 0xbb43498798
+			}
+			stacktop: No such file or directory
+			result {
+				protectedObject: 0
+			}
+			resolvedTarget: 0 {
+				classInstance: Invalid Argument
+			}
+
+		0x7fd36ef22c40	0x95d511f5f0	RexxInstructionAssignment::execute(RexxActivation*, ExpressionStack*) + 0xe0 (/sources/oorexx-5.0.0/interpreter/instructions/AssignmentInstruction.cpp:63)
+			Variables:
+			this: 0xbb427f0780 {
+				expression: 0xbb427f0730
+				variable: 0xbb427f07e0
+			}
+			context: 0xbb427f5a30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb427f09f0
+				packageObject: 0xbb427e6e10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb427e5050
+				argCount: 1
+				doStack: 0
+				current: 0xbb427f0780
+				next: 0xbb427f08d0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: PROGRAMCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 15820563874158032478
+				randomSet: false
+				blockNest: 0
+				instructionCount: 30
+			}
+			stack: 0x1 {
+				size: Bad address
+				top: Bad address
+				stack: Bad address
+			}
+
+		0x7fd36ef22cc0	0x95d50e9e6b	RexxActivation::run(RexxObject*, RexxString*, RexxObject**, size_t, RexxInstruction*, ProtectedObject&) + 0x11b (/sources/oorexx-5.0.0/interpreter/execution/RexxActivation.cpp:62)
+			Variables:
+			this: 0xbb427f5a30 {
+				yieldInstructions: Invalid Argument
+				RANDOM_FACTOR: Invalid Argument
+				RANDOM_ADDER: Invalid Argument
+				SIZE_BITS: Invalid Argument
+				DefaultRandomMin: Invalid Argument
+				DefaultRandomMax: Invalid Argument
+				MaxRandomRange: Invalid Argument
+				VALUE_MARKER: Invalid Argument
+				ASSIGNMENT_MARKER: Invalid Argument
+				code: 0xbb427f09f0
+				packageObject: 0xbb427e6e10
+				scope: 0
+				receiver: 0
+				activity: 0xbb427debf0
+				parent: 0
+				argList: 0xbb427e5050
+				argCount: 1
+				doStack: 0
+				current: 0xbb427f0780
+				next: 0xbb427f08d0
+				debugPause: false
+				clauseBoundary: false
+				result: 0
+				trapInfo: 0
+				contextObject: 0
+				executionState: ACTIVE
+				activationContext: PROGRAMCALL
+				notifyObject: 0
+				environmentList: 0
+				conditionQueue: 0
+				randomSeed: 15820563874158032478
+				randomSet: false
+				blockNest: 0
+				instructionCount: 30
+			}
+			resultObj: 0x7fd36ef22e48 {
+				protectedObject: 0
+			}
+			frame {
+				activation: 0xbb427f5a30
+			}
+			nextInst: 0xbb427f0780 {
+				instructionType: KEYWORD_ASSIGNMENT
+				nextInstruction: 0xbb427f08d0
+			}
+
+		0x7fd36ef22cf0	0x95d50bae31	RoutineClass::runProgram(Activity*, RexxObject**, size_t, ProtectedObject&) + 0x31 (/sources/oorexx-5.0.0/interpreter/classes/RoutineClass.cpp:-1)
+			Variables:
+			this: 0x5fa9 {
+				classInstance: Invalid Argument
+			}
+			activity: 0xbb480ae890 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0x2
+				threadContext
+				oldActivity: 0x3
+				conditionobj: 0
+				requiresTable: 0xbb49b2dc80
+				dispatchMessage: 0xbb425c1a00
+				activations: 0
+				activationStackSize: 2
+				stackFrameDepth: 804367558656
+				currentRexxFrame: 0xbb425d16e0
+				topStackFrame: 0x95d53a85c8
+				currentExit: 0x60
+				waitingObject: 0x22
+				numericSettings: 0x8
+				stackcheck: false
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: false
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: true
+				nestedCount: 3761409897388008820
+				attachCount: 0
+				newThreadAttached: false
+				stackBase: àØÕ•
+				clauseExitUsed: true
+				randomSeed: 2
+				protectedObjects: 0x95d53cb4f0
+				activationFrames: 0xbb49b242f0
+				nestedActivity: 0xbb480ae8a0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			arguments: 0x95d53ceb18 {
+				*arguments: 0
+			}
+			argCount: 23
+			result: 0x7fd36ef22e48 {
+				protectedObject: 0
+			}
+
+		0x7fd36ef22d70	0x95d5112973	CallProgramDispatcher::run(void) + 0xb3 (/sources/oorexx-5.0.0/interpreter/concurrency/RexxStartDispatcher.cpp:-1)
+			Variables:
+			this: 0x7fd36ef22e20 {
+				program: testOORexx.rex
+				arguments: 0xbb427e4ff0
+			}
+			p {
+				protectedObject: 0xbb427e5920
+			}
+			routine {
+				protectedObject: 0xbb427f59f0
+			}
+
+		0x7fd36ef22da0	0x95d50ef830	NativeActivation::run(ActivityDispatcher&) + 0x50 (/sources/oorexx-5.0.0/interpreter/execution/NativeActivation.cpp:-1)
+			Variables:
+			this: 0xbb427e57c0 {
+				MaxNativeArguments: Invalid Argument
+				activity: 0xbb427debf0
+				code: 0
+				receiver: 0
+				messageName: 0
+				activation: 0
+				argCount: 0
+				argList: 0
+				argArray: 0
+				firstSavedObject: 0
+				saveList: 0
+				result: 0
+				activationType: DISPATCHER_ACTIVATION
+				conditionName: 0
+				conditionObj: 0
+				securityManager: 0xbb427d57a0
+				objectVariables: 0
+				stackBase: false
+				trapErrors: true
+				trapConditions: false
+				captureConditions: false
+				variablePoolEnabled: false
+			}
+			dispatcher: 0x7fd36ef22e20 {
+				_vptr.ActivityDispatcher: 0x95d53ae718
+				rc: 0
+				conditionData: 0
+				activity: 0xbb427debf0
+				activation: 0xbb427e57c0
+			}
+			activityLevel: No such file or directory
+
+		0x7fd36ef22df0	0x95d5111c9d	Activity::run(ActivityDispatcher&) + 0x6d (/sources/oorexx-5.0.0/interpreter/concurrency/Activity.cpp:-1)
+			Variables:
+			this: 0xbb427debf0 {
+				MaxDispatchWait: Invalid Argument
+				instance: 0xbb427df1e0
+				threadContext
+				oldActivity: 0
+				conditionobj: 0
+				requiresTable: 0xbb427d8d70
+				dispatchMessage: 0
+				activations: 0xbb427d08c0
+				activationStackSize: 20
+				stackFrameDepth: 9
+				currentRexxFrame: 0xbb46833050
+				topStackFrame: 0xbb46833050
+				currentExit: 0
+				waitingObject: 0
+				numericSettings: 0xbb46833100
+				stackcheck: true
+				exit: false
+				requestingString: false
+				suspended: false
+				interpreterRoot: true
+				waitingForApiAccess: false
+				waitingForDispatch: false
+				waitingOnSemaphore: false
+				dispatchPosted: false
+				nestedCount: 1
+				attachCount: 1
+				newThreadAttached: true
+				stackBase: 
+				clauseExitUsed: false
+				randomSeed: 17376221603667046241
+				protectedObjects: 0x7fd36ef22260
+				activationFrames: 0x7fd36ef22350
+				nestedActivity: 0
+				threadContextFunctions
+				methodContextFunctions
+				callContextFunctions
+				exitContextFunctions
+				ioRedirectorContextFunctions
+			}
+			target: 0x7fd36ef22e20 {
+				_vptr.ActivityDispatcher: 0x95d53ae718
+				rc: 0
+				conditionData: 0
+				activity: 0xbb427debf0
+				activation: 0xbb427e57c0
+			}
+			startDepth: 2
+			base: 239
+			activityLevel: No such file or directory
+			newNActa: 0xbb427e57c0 {
+				MaxNativeArguments: Invalid Argument
+				activity: 0xbb427debf0
+				code: 0
+				receiver: 0
+				messageName: 0
+				activation: 0
+				argCount: 0
+				argList: 0
+				argArray: 0
+				firstSavedObject: 0
+				saveList: 0
+				result: 0
+				activationType: DISPATCHER_ACTIVATION
+				conditionName: 0
+				conditionObj: 0
+				securityManager: 0xbb427d57a0
+				objectVariables: 0
+				stackBase: false
+				trapErrors: true
+				trapConditions: false
+				captureConditions: false
+				variablePoolEnabled: false
+			}
+
+		0x7fd36ef22ec0	0x95d50dfc0f	CallProgram(RexxThreadContext*, const char*, RexxArrayObject) + 0xcf (/sources/oorexx-5.0.0/interpreter/api/ThreadContextStubs.cpp:-1)
+			Variables:
+			p: testOORexx.rex
+			a: 0xbb427e4ff0 {
+			}
+			context {
+				activity: 0xbb427debf0
+				context: 0xbb427dfab0
+				releaseLock: true
+				clearConditions: false
+			}
+			dispatcher {
+				program: testOORexx.rex
+				arguments: 0xbb427e4ff0
+			}
+
+		0x7fd36ef24f70	0xec01f02d0d	main(int, char**) + 0x3cd (/sources/oorexx-5.0.0/utilities/rexx/platform/unix/rexx.cpp:-1)
+			Variables:
+			rc: 0
+			arg_buffer: -X native_api
+			argument {
+				strlength: 13
+				strptr: -X native_api
+			}
+			rexxrc: 0
+			instore: Unavailable {
+				instore[0]
+				instore[1]
+			}
+			pgmInst: 0xbb427df200 {
+				functions: 0x95d53c1280
+				applicationData: 0
+			}
+			pgmThrdInst: 0xbb427dec18 {
+				instance: 0xbb427df200
+				functions: 0x95d53c13a0
+			}
+			rxargs: 0xbb427e4ff0 {
+			}
+			rxcargs: 0xbb427e54d0 {
+			}
+			dir: 0xbb427ddab0 {
+			}
+
+		0x7fd36ef24f90	0xec01f02f69	_start + 0x39 
+		0x7fd36ef24fd0	0xf23e60a490	runtime_loader + 0x100 
+		00000000	0x7ffff8f31260	commpage_thread_exit + 0 
+
+		Registers:
+			  rip:	0x00000095d51071bc
+			  rsp:	0x00007fd36ef22040
+			  rbp:	0x00007fd36ef22060
+			  rax:	0x0000000000005fa9
+			  rbx:	0x00000095d53ce940
+			  rcx:	0x0000000000000078
+			  rdx:	0x0000000000000001
+			  rsi:	0x000000bb480ae890
+			  rdi:	0x00000095d53ce940
+			   r8:	0x00000095d53ceb18
+			   r9:	0x0000000000000017
+			  r10:	0x0000000000000002
+			  r11:	0x0000000000003202
+			  r12:	0x0000000000000080
+			  r13:	0x0000000000000041
+			  r14:	0x000000000000004c
+			  r15:	0x000000bb46833ee0
+			   cs:	0x002b
+			   ds:	0x0000
+			   es:	0x0000
+			   fs:	0x0000
+			   gs:	0x0000
+			   ss:	0x0023
+			  st0:	0
+			  st1:	nan
+			  st2:	nan
+			  st3:	nan
+			  st4:	0
+			  st5:	0
+			  st6:	0
+			  st7:	0
+			  mm0:	{0, 0, 0, 0}
+			  mm1:	{0xe21b, 0, 0, 0}
+			  mm2:	{0xf000, 0xfee0, 0, 0}
+			  mm3:	{0x7b69, 0, 0, 0}
+			  mm4:	{0, 0, 0, 0}
+			  mm5:	{0, 0, 0, 0}
+			  mm6:	{0, 0, 0, 0}
+			  mm7:	{0, 0, 0, 0}
+			 xmm0:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm1:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm2:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm3:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm4:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm5:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm6:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm7:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm8:	{0, 0, 0, 0, 0, 0, 0, 0}
+			 xmm9:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm10:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm11:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm12:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm13:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm14:	{0, 0, 0, 0, 0, 0, 0, 0}
+			xmm15:	{0, 0, 0, 0, 0, 0, 0, 0}
+
+Loaded Images:
+	ID		Text Base	Text End	Data Base	Data End	Type	Name
+	--------------------------------------------------------------------------------
+	4174	0xc323e7000	0xc323ff000	0xc325ff000	0xc32600000	lib    	/boot/system/lib/librexxapi.so.5.0.0
+	4189	0x8df9e22000	0x8df9e26000	0x8dfa026000	0x8dfa027000	lib    	/boot/system/lib/librxmath.so.5.0.0
+	4173	0x95d4f9d000	0x95d51a6000	0x95d53a5000	0x95d53d1000	lib    	/boot/system/lib/librexx.so.5.0.0
+	4187	0xa43bca7000	0xa43bcd6000	0xa43bed6000	0xa43bf0a000	lib    	/boot/system/lib/libicutu.so.57.1
+	4176	0xab4a784000	0xab4a8ec000	0xab4aaec000	0xab4ab00000	lib    	/boot/system/lib/libstdc++.so.6.0.24
+	4180	0xb8eaddf000	0xb8eade4000	0xb8eafe3000	0xb8eafe4000	lib    	/boot/system/lib/librxregexp.so.5.0.0
+	4172	0xec01f02000	0xec01f04000	0xec02103000	0xec02104000	app    	/boot/system/bin/rexx
+	4178	0xef74217000	0xef74376000	0xef74576000	0xef745c9000	lib    	/boot/system/lib/libroot.so
+	4171	0xf23e5f6000	0xf23e618000	0xf23e817000	0xf23e819000	lib    	/boot/system/runtime_loader
+	4186	0x130be2ff000	0x130be30a000	0x130be50a000	0x130be50b000	lib    	/boot/system/lib/libiculx.so.57.1
+	4181	0x131ee639000	0x131ee64a000	0x131ee84a000	0x131ee84b000	lib    	/boot/system/lib/libroot-addon-icu.so
+	4177	0x14d37c6d000	0x14d37c82000	0x14d37e81000	0x14d37e82000	lib    	/boot/system/lib/libgcc_s.so.1
+	4185	0x1536536a000	0x153653bf000	0x153655bf000	0x153655c2000	lib    	/boot/system/lib/libicule.so.57.1
+	4188	0x15486068000	0x15486200000	0x154863ff000	0x15486414000	lib    	/boot/system/lib/libicuuc.so.57.1
+	4175	0x1575ee7d000	0x1575eebe000	0x1575f0bd000	0x1575f0c6000	lib    	/boot/system/lib/libnetwork.so
+	4183	0x1c3b5fa7000	0x1c3b6224000	0x1c3b6423000	0x1c3b6438000	lib    	/boot/system/lib/libicui18n.so.57.1
+	4184	0x1c918aee000	0x1c918afa000	0x1c918cf9000	0x1c918cfb000	lib    	/boot/system/lib/libicuio.so.57.1
+	4179	0x1cb90214000	0x1cb9021b000	0x1cb9041b000	0x1cb9041c000	lib    	/boot/system/lib/libbsd.so
+	4182	0x23800c30000	0x238024ae000	0x238026ad000	0x238026ae000	lib    	/boot/system/lib/libicudata.so.57.1
+	4170	0x7ffff8f31000	0x7ffff8f39000	0x00000000	0x00000000	system 	commpage
+
+Areas:
+	ID		Base		End			Size (KiB)	Protection	Locking			Name
+	--------------------------------------------------------------------------------
+	11552	0xf3ea1000	0xf3eb1000	        64	rw-        	full          	rld heap
+	11551	0x2a2195000	0x2a21a5000	        64	rw-        	full          	rld heap
+	11550	0x56e29c000	0x56e2a4000	        32	rw-        	full          	rld heap
+	11535	0xc323e7000	0xc323ff000	        96	r-x        	full          	librexxapi.so.5.0.0_seg0ro
+	11536	0xc325ff000	0xc32600000	         4	rw-        	full          	librexxapi.so.5.0.0_seg1rw
+	11529	0xd8bbac000	0xd8bbad000	         4	rw-S       	full          	_rld_debug_
+	11528	0xde9022000	0xde9032000	        64	rw-        	full          	rld heap
+	11579	0x8df9e22000	0x8df9e26000	        16	r-x        	full          	librxmath.so.5.0.0_seg0ro
+	11580	0x8dfa026000	0x8dfa027000	         4	rw-        	full          	librxmath.so.5.0.0_seg1rw
+	11532	0x95d4f9d000	0x95d51a6000	      2084	r-x        	full          	librexx.so.5.0.0_seg0ro
+	11533	0x95d53a5000	0x95d53ca000	       148	rw-        	full          	librexx.so.5.0.0_seg1rw
+	11534	0x95d53ca000	0x95d53d1000	        28	rw-        	full          	librexx.so.5.0.0_seg2rw
+	11570	0xa43bca7000	0xa43bcd6000	       188	r-x        	full          	libicutu.so.57.1_seg0ro
+	11571	0xa43bed6000	0xa43bed8000	         8	rw-        	full          	libicutu.so.57.1_seg1rw
+	11572	0xa43bed8000	0xa43bf0a000	       200	rw-        	full          	libicutu.so.57.1_seg2rw
+	11540	0xab4a784000	0xab4a8ec000	      1440	r-x        	full          	libstdc++.so.6.0.24_seg0ro
+	11541	0xab4aaec000	0xab4aaf8000	        48	rw-        	full          	libstdc++.so.6.0.24_seg1rw
+	11542	0xab4aaf8000	0xab4ab00000	        32	rw-        	full          	libstdc++.so.6.0.24_seg2rw
+	11556	0xb8eaddf000	0xb8eade4000	        20	r-x        	full          	librxregexp.so.5.0.0_seg0ro
+	11557	0xb8eafe3000	0xb8eafe4000	         4	rw-        	full          	librxregexp.so.5.0.0_seg1rw
+	11553	0xbb422c9000	0xbb49d09000	    125184	rw-        	full          	heap
+	11530	0xec01f02000	0xec01f04000	         8	r-x        	full          	rexx_seg0ro
+	11531	0xec02103000	0xec02104000	         4	rw-        	full          	rexx_seg1rw
+	11545	0xef74217000	0xef74376000	      1404	r-x        	full          	libroot.so_seg0ro
+	11546	0xef74576000	0xef74584000	        56	rw-        	full          	libroot.so_seg1rw
+	11547	0xef74584000	0xef745c9000	       276	rw-        	full          	libroot.so_seg2rw
+	11526	0xf23e5f6000	0xf23e618000	       136	r-x        	full          	runtime_loader_seg0ro
+	11527	0xf23e817000	0xf23e819000	         8	rw-        	full          	runtime_loader_seg1rw
+	11568	0x130be2ff000	0x130be30a000	        44	r-x        	full          	libiculx.so.57.1_seg0ro
+	11569	0x130be50a000	0x130be50b000	         4	rw-        	full          	libiculx.so.57.1_seg1rw
+	11558	0x131ee639000	0x131ee64a000	        68	r-x        	full          	libroot-addon-icu.so_seg0ro
+	11559	0x131ee84a000	0x131ee84b000	         4	rw-        	full          	libroot-addon-icu.so_seg1rw
+	11543	0x14d37c6d000	0x14d37c82000	        84	r-x        	full          	libgcc_s.so.1_seg0ro
+	11544	0x14d37e81000	0x14d37e82000	         4	rw-        	full          	libgcc_s.so.1_seg1rw
+	11566	0x1536536a000	0x153653bf000	       340	r-x        	full          	libicule.so.57.1_seg0ro
+	11567	0x153655bf000	0x153655c2000	        12	rw-        	full          	libicule.so.57.1_seg1rw
+	11573	0x15486068000	0x15486200000	      1632	r-x        	full          	libicuuc.so.57.1_seg0ro
+	11574	0x154863ff000	0x15486414000	        84	rw-        	full          	libicuuc.so.57.1_seg1rw
+	11537	0x1575ee7d000	0x1575eebe000	       260	r-x        	full          	libnetwork.so_seg0ro
+	11538	0x1575f0bd000	0x1575f0c0000	        12	rw-        	full          	libnetwork.so_seg1rw
+	11539	0x1575f0c0000	0x1575f0c6000	        24	rw-        	full          	libnetwork.so_seg2rw
+	11562	0x1c3b5fa7000	0x1c3b6224000	      2548	r-x        	full          	libicui18n.so.57.1_seg0ro
+	11563	0x1c3b6423000	0x1c3b6438000	        84	rw-        	full          	libicui18n.so.57.1_seg1rw
+	11564	0x1c918aee000	0x1c918afa000	        48	r-x        	full          	libicuio.so.57.1_seg0ro
+	11565	0x1c918cf9000	0x1c918cfb000	         8	rw-        	full          	libicuio.so.57.1_seg1rw
+	11548	0x1cb90214000	0x1cb9021b000	        28	r-x        	full          	libbsd.so_seg0ro
+	11549	0x1cb9041b000	0x1cb9041c000	         4	rw-        	full          	libbsd.so_seg1rw
+	11560	0x23800c30000	0x238024ae000	     25080	r-x        	full          	libicudata.so.57.1_seg0ro
+	11561	0x238026ad000	0x238026ae000	         4	rw-        	full          	libicudata.so.57.1_seg1rw
+	11523	0x7f1f7bb95000	0x7f1f7bb99000	        16	rw-        	full          	user area
+	11576	0x7f959429c000	0x7f9594321000	       532	rw-s       	full          	pthread func_828_stack
+	11578	0x7fcebd2dd000	0x7fcebd362000	       532	rw-s       	full          	pthread func_829_stack
+	11524	0x7fd36df21000	0x7fd36ef27000	     16408	rw-s       	full          	rexx_826_stack
+	11525	0x7ffff8f31000	0x7ffff8f39000	        32	r-xS       	full          	commpage
+
+Protection Flags: r - read, w - write, x - execute, s - stack, o - overcommit, c - cloneable, S - shared, k - kernel
+
+Semaphores:
+	ID		Count	Last Holder	Name
+	------------------------------------------------------------
